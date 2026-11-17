@@ -48,7 +48,7 @@
   /* 🟨 FONTE DO BOTÃO */
   --fonte-botao: 'Montserrat', sans-serif;
 
-  /* 🟨 COR DOS BOTÕES REDONDOS */
+  /* 🟨 COR DOS BOTÕES REDONDOS DA CÂMERA */
   --cor-botoes-camera: rgba(255,255,255,0.25);
 
   /* 🟨 COR DAS LEGENDAS ACIMA DOS BOTÕES */
@@ -59,6 +59,9 @@
 
   /* 🟨 TAMANHO DAS LEGENDAS DOS BOTÕES */
   --tamanho-legendas: 10px;
+
+  /* 🟨 COR DO CONTROLE DE SUAVIZAÇÃO */
+  --cor-suavizacao: #ffffff;
 
   /* 🟨 COR DE FUNDO DA TELA DE RESULTADO */
   --cor-fundo-resultado: #f5eee8;
@@ -147,6 +150,8 @@ html, body {
   justify-content: center;
 }
 
+/* NOMES DA CAPA */
+
 .names {
   font-family: var(--fonte-nomes);
   font-size: var(--tamanho-nomes);
@@ -161,6 +166,8 @@ html, body {
   font-style: italic;
   margin: 6px 0;
 }
+
+/* BOTÃO ACESSAR MOLDURA */
 
 .access-button {
   margin-top: 35px;
@@ -207,6 +214,8 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1);
+  transition: filter 0.15s ease;
 }
 
 /* 🟨 MOLDURA DO CASAMENTO */
@@ -221,7 +230,104 @@ html, body {
 }
 
 /* ==================================================
-   BOTÕES E LEGENDAS
+   CONTROLE VERTICAL DE SUAVIZAÇÃO
+================================================== */
+
+.smooth-control {
+  position: absolute;
+  z-index: 26;
+
+  /* POSIÇÃO NA LATERAL DIREITA */
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+
+  padding: 10px 7px;
+  border-radius: 24px;
+  background: rgba(0,0,0,0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ÍCONE DE SUAVIZAÇÃO */
+
+.smooth-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-suavizacao);
+  font-size: 19px;
+}
+
+/* TEXTO DO CONTROLE */
+
+.smooth-label {
+  color: var(--cor-suavizacao);
+  font-family: var(--fonte-legendas);
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* VALOR DA SUAVIZAÇÃO */
+
+.smooth-value {
+  color: var(--cor-suavizacao);
+  font-family: var(--fonte-legendas);
+  font-size: 9px;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* CONTROLE DESLIZANTE VERTICAL */
+
+.smooth-slider {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 105px;
+  height: 4px;
+
+  transform: rotate(-90deg);
+  margin: 48px 0;
+
+  background: rgba(255,255,255,0.35);
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+.smooth-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid rgba(0,0,0,0.2);
+}
+
+.smooth-slider::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid rgba(0,0,0,0.2);
+}
+
+/* ==================================================
+   BOTÕES E LEGENDAS DA CÂMERA
 ================================================== */
 
 .camera-controls {
@@ -236,8 +342,6 @@ html, body {
   padding: 0 12px;
   gap: 8px;
 }
-
-/* CADA BOTÃO COM SUA LEGENDA */
 
 .control-item {
   display: flex;
@@ -290,7 +394,7 @@ html, body {
 }
 
 /* ==================================================
-   RESULTADO
+   TELA DE RESULTADO
 ================================================== */
 
 #resultArea {
@@ -317,6 +421,8 @@ html, body {
   color: #76675d;
 }
 
+/* FOTOGRAFIA FINAL */
+
 #resultCanvas {
   display: block;
   width: 100%;
@@ -324,31 +430,75 @@ html, body {
   margin: 20px 0;
 }
 
+/* BOTÕES PEQUENOS ABAIXO DA FOTOGRAFIA */
+
 .result-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
 }
 
 .result-button {
-  width: 100%;
-  padding: 17px;
+  flex: 1;
+  min-width: 0;
+  min-height: 43px;
+  padding: 10px 3px;
   border: 1px solid #c7b8a9;
-  border-radius: 40px;
+  border-radius: 30px;
   background: transparent;
   color: var(--cor-texto-resultado);
-  font-size: 12px;
-  letter-spacing: 1px;
+  font-size: 9px;
+  letter-spacing: 0.3px;
+  font-family: var(--fonte-botao);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .result-button.primary {
   background: var(--cor-texto-resultado);
   color: white;
+  border-color: var(--cor-texto-resultado);
 }
 
 #gallery {
   display: none;
+}
+
+/* TELAS PEQUENAS */
+
+@media (max-width: 360px) {
+  .camera-controls {
+    padding: 0 8px;
+    gap: 4px;
+  }
+
+  .round-btn {
+    width: 53px;
+    height: 53px;
+  }
+
+  .round-btn.shutter {
+    width: 68px;
+    height: 68px;
+  }
+
+  .control-label {
+    font-size: 8px;
+    letter-spacing: 0.4px;
+  }
+
+  .result-buttons {
+    gap: 5px;
+  }
+
+  .result-button {
+    font-size: 8px;
+    padding: 9px 2px;
+  }
 }
 
 </style>
@@ -400,18 +550,46 @@ html, body {
 
     <video id="video" autoplay playsinline></video>
 
-    <!-- 🟨 ARQUIVO DA MOLDURA COM NOMES JÁ DESENHADOS -->
+    <!-- 🟨 MOLDURA COM NOMES JÁ DESENHADOS -->
 
-    <img id="frame" src="moldura.png" alt="Moldura personalizada">
+    <img
+      id="frame"
+      src="moldura.png"
+      alt="Moldura personalizada"
+    >
 
   </div>
 
-  <!-- OS NOMES NÃO SÃO REPETIDOS AQUI.
-       JÁ ESTÃO NA IMAGEM moldura.png. -->
+  <!-- CONTROLE VERTICAL DE SUAVIZAÇÃO -->
+
+  <div class="smooth-control">
+
+    <div class="smooth-icon">✧</div>
+
+    <span class="smooth-label">
+      SUAVIZAR PELE
+    </span>
+
+    <input
+      type="range"
+      id="smoothSlider"
+      class="smooth-slider"
+      min="0"
+      max="100"
+      value="0"
+      step="5"
+      aria-label="Intensidade da suavização"
+    >
+
+    <span class="smooth-value" id="smoothValue">
+      0%
+    </span>
+
+  </div>
+
+  <!-- BOTÕES DA CÂMERA -->
 
   <div class="camera-controls">
-
-    <!-- 🟨 BOTÃO DA GALERIA -->
 
     <div class="control-item">
 
@@ -429,8 +607,6 @@ html, body {
 
     </div>
 
-    <!-- 🟨 BOTÃO DE FOTOGRAFAR -->
-
     <div class="control-item">
 
       <span class="control-label">
@@ -446,8 +622,6 @@ html, body {
       </button>
 
     </div>
-
-    <!-- 🟨 BOTÃO DE TROCAR CÂMERA -->
 
     <div class="control-item">
 
@@ -469,7 +643,11 @@ html, body {
 
 </section>
 
-<input type="file" id="gallery" accept="image/*">
+<input
+  type="file"
+  id="gallery"
+  accept="image/*"
+>
 
 <!-- ==================================================
      RESULTADO
@@ -489,15 +667,24 @@ html, body {
 
   <div class="result-buttons">
 
-    <button class="result-button primary" onclick="downloadPhoto()">
+    <button
+      class="result-button primary"
+      onclick="downloadPhoto()"
+    >
       SALVAR MINHA FOTO
     </button>
 
-    <button class="result-button" onclick="goHome()">
+    <button
+      class="result-button"
+      onclick="goHome()"
+    >
       VOLTAR AO INÍCIO
     </button>
 
-    <button class="result-button" onclick="openCamera()">
+    <button
+      class="result-button"
+      onclick="openCamera()"
+    >
       TIRAR OUTRA FOTO
     </button>
 
@@ -519,9 +706,42 @@ const home = document.getElementById("home");
 const cameraArea = document.getElementById("cameraArea");
 const resultArea = document.getElementById("resultArea");
 
+const smoothSlider = document.getElementById("smoothSlider");
+const smoothValue = document.getElementById("smoothValue");
+
 let stream = null;
 let facingMode = "environment";
 let openingCamera = false;
+
+/* ==================================================
+   SUAVIZAÇÃO DE PELE
+================================================== */
+
+/*
+   ATENÇÃO:
+   Esta é uma suavização visual simples.
+   Ela aplica um desfoque leve à imagem inteira,
+   não identifica exclusivamente a pele.
+*/
+
+function getSmoothBlur() {
+  return Number(smoothSlider.value) * 0.025;
+}
+
+function updateSmoothness() {
+
+  const level = Number(smoothSlider.value);
+
+  smoothValue.textContent = level + "%";
+
+  const blur = getSmoothBlur();
+
+  video.style.filter = blur > 0
+    ? `blur(${blur}px)`
+    : "none";
+}
+
+smoothSlider.addEventListener("input", updateSmoothness);
 
 /* NAVEGAÇÃO */
 
@@ -588,6 +808,7 @@ async function openCamera() {
 
     await video.play();
 
+    updateSmoothness();
     showSection(cameraArea);
 
   } catch (error) {
@@ -639,7 +860,9 @@ function openGallery() {
   document.getElementById("gallery").click();
 }
 
-/* AJUSTAR FOTO PARA 9:16 */
+/* ==================================================
+   AJUSTAR FOTO PARA 9:16
+================================================== */
 
 function drawCover(source) {
 
@@ -657,6 +880,14 @@ function drawCover(source) {
   const sx = (sw - cropWidth) / 2;
   const sy = (sh - cropHeight) / 2;
 
+  const blur = getSmoothBlur();
+
+  ctx.save();
+
+  ctx.filter = blur > 0
+    ? `blur(${blur * (1080 / cameraArea.clientHeight)}px)`
+    : "none";
+
   ctx.drawImage(
     source,
     sx,
@@ -668,6 +899,8 @@ function drawCover(source) {
     width,
     height
   );
+
+  ctx.restore();
 }
 
 /* ==================================================
@@ -684,11 +917,11 @@ function applyFrame(source, cleanup) {
     canvas.width = 1080;
     canvas.height = 1920;
 
-    // DESENHA A FOTO
+    // DESENHA A FOTO COM A SUAVIZAÇÃO ESCOLHIDA
 
     drawCover(source);
 
-    // DESENHA A MOLDURA COMPLETA
+    // DESENHA A MOLDURA COMPLETA E NÍTIDA
 
     ctx.drawImage(
       frameImage,
@@ -727,7 +960,9 @@ function takePhoto() {
   applyFrame(video);
 }
 
-/* ESCOLHER FOTO DA GALERIA */
+/* ==================================================
+   ESCOLHER FOTO DA GALERIA
+================================================== */
 
 document.getElementById("gallery").addEventListener(
   "change",
@@ -761,7 +996,9 @@ document.getElementById("gallery").addEventListener(
   }
 );
 
-/* BAIXAR FOTO */
+/* ==================================================
+   BAIXAR FOTO
+================================================== */
 
 function downloadPhoto() {
 
