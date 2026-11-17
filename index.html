@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -47,20 +48,22 @@
   /* 🟨 FONTE DO BOTÃO */
   --fonte-botao: 'Montserrat', sans-serif;
 
-  /* 🟨 COR DOS NOMES NA CÂMERA */
-  --cor-nomes-camera: #ffffff;
-
-  /* 🟨 FONTE DOS NOMES NA CÂMERA */
-  --fonte-camera: 'Cormorant Garamond', serif;
-
-  /* 🟨 TAMANHO DOS NOMES NA CÂMERA */
-  --tamanho-camera: 30px;
-
   /* 🟨 COR DOS BOTÕES REDONDOS */
   --cor-botoes-camera: rgba(255,255,255,0.25);
 
-  /* 🟨 CORES DA TELA DE RESULTADO */
+  /* 🟨 COR DAS LEGENDAS ACIMA DOS BOTÕES */
+  --cor-legendas-botoes: #ffffff;
+
+  /* 🟨 FONTE DAS LEGENDAS DOS BOTÕES */
+  --fonte-legendas: 'Montserrat', sans-serif;
+
+  /* 🟨 TAMANHO DAS LEGENDAS DOS BOTÕES */
+  --tamanho-legendas: 10px;
+
+  /* 🟨 COR DE FUNDO DA TELA DE RESULTADO */
   --cor-fundo-resultado: #f5eee8;
+
+  /* 🟨 COR DOS TEXTOS DO RESULTADO */
   --cor-texto-resultado: #51443c;
 
 }
@@ -206,7 +209,7 @@ html, body {
   object-fit: cover;
 }
 
-/* 🟨 ARQUIVO DA MOLDURA */
+/* 🟨 MOLDURA DO CASAMENTO */
 
 #frame {
   position: absolute;
@@ -218,50 +221,52 @@ html, body {
 }
 
 /* ==================================================
-   🟨 NOMES NA MOLDURA
-   AUMENTE bottom PARA SUBIR.
-   DIMINUA bottom PARA DESCER.
-================================================== */
-
-.camera-names {
-  position: absolute;
-  z-index: 24;
-  left: 0;
-  right: 0;
-  bottom: 145px;
-  width: 100%;
-  text-align: center;
-  padding: 0 15px;
-
-  color: var(--cor-nomes-camera);
-  font-family: var(--fonte-camera);
-  font-size: var(--tamanho-camera);
-  font-weight: normal;
-  line-height: 1.2;
-
-  text-shadow: 0 1px 5px rgba(0,0,0,0.35);
-  pointer-events: none;
-}
-
-/* ==================================================
-   BOTÕES REDONDOS DA CÂMERA
+   BOTÕES E LEGENDAS
 ================================================== */
 
 .camera-controls {
   position: absolute;
   z-index: 25;
-  bottom: max(35px, env(safe-area-inset-bottom));
+  bottom: max(30px, env(safe-area-inset-bottom));
   left: 0;
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-evenly;
-  padding: 0 20px;
+  padding: 0 12px;
+  gap: 8px;
 }
+
+/* CADA BOTÃO COM SUA LEGENDA */
+
+.control-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex: 1;
+}
+
+/* 🟨 LEGENDAS ACIMA DOS BOTÕES */
+
+.control-label {
+  color: var(--cor-legendas-botoes);
+  font-family: var(--fonte-legendas);
+  font-size: var(--tamanho-legendas);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.7);
+}
+
+/* BOTÕES REDONDOS */
 
 .round-btn {
   width: 60px;
   height: 60px;
+  flex-shrink: 0;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.85);
   background: var(--cor-botoes-camera);
@@ -272,6 +277,7 @@ html, body {
   justify-content: center;
   backdrop-filter: blur(8px);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .round-btn.shutter {
@@ -372,6 +378,8 @@ html, body {
         Rodrigo
       </h1>
 
+      <!-- 🟨 TEXTO DO BOTÃO DA CAPA -->
+
       <button class="access-button" onclick="openCamera()">
         ACESSAR MOLDURA
       </button>
@@ -392,32 +400,70 @@ html, body {
 
     <video id="video" autoplay playsinline></video>
 
-    <!-- 🟨 ARQUIVO DA MOLDURA -->
+    <!-- 🟨 ARQUIVO DA MOLDURA COM NOMES JÁ DESENHADOS -->
+
     <img id="frame" src="moldura.png" alt="Moldura personalizada">
 
   </div>
 
-  <!-- 🟨 ALTERE AQUI OS NOMES NA MOLDURA -->
-
-  <div class="camera-names" id="cameraNames">
-    Mariana & Rodrigo
-  </div>
-
-  <!-- BOTÕES DA CÂMERA -->
+  <!-- OS NOMES NÃO SÃO REPETIDOS AQUI.
+       JÁ ESTÃO NA IMAGEM moldura.png. -->
 
   <div class="camera-controls">
 
-    <button class="round-btn" onclick="openGallery()" aria-label="Abrir galeria">
-      ▧
-    </button>
+    <!-- 🟨 BOTÃO DA GALERIA -->
 
-    <button class="round-btn shutter" onclick="takePhoto()" aria-label="Tirar foto">
-      ●
-    </button>
+    <div class="control-item">
 
-    <button class="round-btn" onclick="switchCamera()" aria-label="Trocar câmera">
-      ↻
-    </button>
+      <span class="control-label">
+        GALERIA
+      </span>
+
+      <button
+        class="round-btn"
+        onclick="openGallery()"
+        aria-label="Abrir galeria"
+      >
+        ▧
+      </button>
+
+    </div>
+
+    <!-- 🟨 BOTÃO DE FOTOGRAFAR -->
+
+    <div class="control-item">
+
+      <span class="control-label">
+        FOTOGRAFAR
+      </span>
+
+      <button
+        class="round-btn shutter"
+        onclick="takePhoto()"
+        aria-label="Tirar foto"
+      >
+        ●
+      </button>
+
+    </div>
+
+    <!-- 🟨 BOTÃO DE TROCAR CÂMERA -->
+
+    <div class="control-item">
+
+      <span class="control-label">
+        TROCAR CÂMERA
+      </span>
+
+      <button
+        class="round-btn"
+        onclick="switchCamera()"
+        aria-label="Trocar câmera"
+      >
+        ↻
+      </button>
+
+    </div>
 
   </div>
 
@@ -519,8 +565,6 @@ async function openCamera() {
       throw new Error("Câmera indisponível neste navegador.");
     }
 
-    // 🟨 SOLICITA PREFERENCIALMENTE A CÂMERA TRASEIRA
-
     const newStream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: {
@@ -534,8 +578,6 @@ async function openCamera() {
 
     stream = newStream;
     video.srcObject = stream;
-
-    // AGUARDA A CÂMERA ESTAR PRONTA
 
     if (video.readyState < 1) {
       await new Promise((resolve, reject) => {
@@ -579,9 +621,7 @@ async function openCamera() {
   }
 }
 
-/* ==================================================
-   TROCAR CÂMERA
-================================================== */
+/* TROCAR CÂMERA */
 
 async function switchCamera() {
 
@@ -631,85 +671,37 @@ function drawCover(source) {
 }
 
 /* ==================================================
-   DESENHAR NOMES NA FOTO FINAL
-================================================== */
-
-async function drawNamesOnPhoto() {
-
-  await document.fonts.ready;
-
-  const cameraHeight = cameraArea.clientHeight || window.innerHeight;
-  const scale = canvas.height / cameraHeight;
-
-  const namesElement = document.getElementById("cameraNames");
-  const style = getComputedStyle(namesElement);
-
-  const bottom = parseFloat(style.bottom) || 145;
-  const fontSize = parseFloat(style.fontSize) || 30;
-  const fontFamily = style.fontFamily;
-  const color = style.color;
-
-  ctx.save();
-
-  ctx.textAlign = "center";
-  ctx.textBaseline = "alphabetic";
-
-  ctx.fillStyle = color;
-  ctx.font = `${fontSize * scale}px ${fontFamily}`;
-
-  ctx.shadowColor = "rgba(0,0,0,0.35)";
-  ctx.shadowBlur = 5 * scale;
-  ctx.shadowOffsetY = 1 * scale;
-
-  ctx.fillText(
-    namesElement.textContent.trim(),
-    canvas.width / 2,
-    canvas.height - (bottom * scale) - (5 * scale)
-  );
-
-  ctx.restore();
-}
-
-/* ==================================================
-   APLICAR MOLDURA E NOMES
+   APLICAR MOLDURA
+   OS NOMES JÁ ESTÃO NA PRÓPRIA MOLDURA.
 ================================================== */
 
 function applyFrame(source, cleanup) {
 
   const frameImage = new Image();
 
-  frameImage.onload = async function() {
+  frameImage.onload = function() {
 
-    try {
+    canvas.width = 1080;
+    canvas.height = 1920;
 
-      canvas.width = 1080;
-      canvas.height = 1920;
+    // DESENHA A FOTO
 
-      drawCover(source);
+    drawCover(source);
 
-      ctx.drawImage(
-        frameImage,
-        0,
-        0,
-        1080,
-        1920
-      );
+    // DESENHA A MOLDURA COMPLETA
 
-      await drawNamesOnPhoto();
+    ctx.drawImage(
+      frameImage,
+      0,
+      0,
+      1080,
+      1920
+    );
 
-      if (cleanup) cleanup();
+    if (cleanup) cleanup();
 
-      stopCamera();
-      showSection(resultArea);
-
-    } catch (error) {
-
-      if (cleanup) cleanup();
-
-      console.error(error);
-      alert("Não foi possível finalizar sua fotografia.");
-
-    }
+    stopCamera();
+    showSection(resultArea);
   };
 
   frameImage.onerror = function() {
@@ -735,9 +727,7 @@ function takePhoto() {
   applyFrame(video);
 }
 
-/* ==================================================
-   ESCOLHER FOTO DA GALERIA
-================================================== */
+/* ESCOLHER FOTO DA GALERIA */
 
 document.getElementById("gallery").addEventListener(
   "change",
@@ -771,9 +761,7 @@ document.getElementById("gallery").addEventListener(
   }
 );
 
-/* ==================================================
-   BAIXAR FOTO
-================================================== */
+/* BAIXAR FOTO */
 
 function downloadPhoto() {
 
