@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,7 +7,7 @@
 
 <title>Mariana & Rodrigo</title>
 
-<!-- FONTES DISPONÍVEIS -->
+<!-- FONTES -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,20 +20,17 @@
 
 :root {
 
-  /* 🟨 FOTO DE FUNDO DA CAPA
-     Troque foto-capa.jpg pelo nome da nova imagem.
-     Para usar somente uma cor, coloque: none
-  */
+  /* 🟨 FOTO DE FUNDO DA CAPA */
   --imagem-capa: url("foto-capa.jpg");
 
   /* 🟨 COR DE FUNDO DA CAPA */
-  --cor-fundo-capa: #808000;
+  --cor-fundo-capa: #211c19;
 
   /* 🟨 COR DOS NOMES DA CAPA */
-  --cor-nomes: #FFFFFF;
+  --cor-nomes: #ffffff;
 
   /* 🟨 FONTE DOS NOMES DA CAPA */
-  --fonte-nomes: 'Cinzel', serif;
+  --fonte-nomes: 'Cormorant Garamond', serif;
 
   /* 🟨 TAMANHO DOS NOMES DA CAPA */
   --tamanho-nomes: 54px;
@@ -55,7 +51,7 @@
   --cor-nomes-camera: #ffffff;
 
   /* 🟨 FONTE DOS NOMES NA CÂMERA */
-  --fonte-camera: 'Cinzel', serif;
+  --fonte-camera: 'Cormorant Garamond', serif;
 
   /* 🟨 TAMANHO DOS NOMES NA CÂMERA */
   --tamanho-camera: 30px;
@@ -210,7 +206,8 @@ html, body {
   object-fit: cover;
 }
 
-/* 🟨 MOLDURA DO CASAMENTO */
+/* 🟨 ARQUIVO DA MOLDURA */
+
 #frame {
   position: absolute;
   inset: 0;
@@ -221,9 +218,9 @@ html, body {
 }
 
 /* ==================================================
-   🟨 POSIÇÃO DOS NOMES NA MOLDURA
-   Aumente bottom para subir os nomes.
-   Diminua bottom para descer os nomes.
+   🟨 NOMES NA MOLDURA
+   AUMENTE bottom PARA SUBIR.
+   DIMINUA bottom PARA DESCER.
 ================================================== */
 
 .camera-names {
@@ -357,7 +354,7 @@ html, body {
 
 <!-- ==================================================
      CAPA
-     🟨 ALTERE OS NOMES ABAIXO
+     🟨 ALTERE OS NOMES DOS NOIVOS AQUI
 ================================================== -->
 
 <section id="home">
@@ -370,16 +367,11 @@ html, body {
     <div class="hero-content">
 
       <h1 class="names">
-        <!-- 🟨 NOME DO PRIMEIRO NOIVO -->
         Mariana
-
         <span>&</span>
-
-        <!-- 🟨 NOME DO SEGUNDO NOIVO -->
         Rodrigo
       </h1>
 
-      <!-- 🟨 ALTERE O TEXTO DO BOTÃO AQUI -->
       <button class="access-button" onclick="openCamera()">
         ACESSAR MOLDURA
       </button>
@@ -405,7 +397,7 @@ html, body {
 
   </div>
 
-  <!-- 🟨 ALTERE AQUI OS NOMES QUE APARECEM NA MOLDURA -->
+  <!-- 🟨 ALTERE AQUI OS NOMES NA MOLDURA -->
 
   <div class="camera-names" id="cameraNames">
     Mariana & Rodrigo
@@ -483,6 +475,7 @@ const resultArea = document.getElementById("resultArea");
 
 let stream = null;
 let facingMode = "environment";
+let openingCamera = false;
 
 /* NAVEGAÇÃO */
 
@@ -503,77 +496,97 @@ function stopCamera() {
     stream = null;
   }
 
+  video.pause();
   video.srcObject = null;
 }
 
-/* ABRIR CÂMERA TRASEIRA */
+/* ==================================================
+   ABRIR CÂMERA
+   CÂMERA TRASEIRA COMO PADRÃO
+================================================== */
 
 async function openCamera() {
+
+  if (openingCamera) return;
+
+  openingCamera = true;
+
   try {
+
     stopCamera();
 
     if (!navigator.mediaDevices?.getUserMedia) {
-      throw new Error("Câmera indisponível");
+      throw new Error("Câmera indisponível neste navegador.");
     }
 
-    let newStream;
+    // 🟨 SOLICITA PREFERENCIALMENTE A CÂMERA TRASEIRA
 
-    try {
-      newStream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: { exact: "environment" }
+    const newStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: {
+          ideal: facingMode
         },
-        audio: false
-      });
-
-    } catch (error) {
-      if (
-        error.name === "OverconstrainedError" ||
-        error.name === "NotFoundError" ||
-        error.name === "TypeError"
-      ) {
-        newStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: { ideal: "environment" }
-          },
-          audio: false
-        });
-      } else {
-        throw error;
-      }
-    }
+        width: { ideal: 1080 },
+        height: { ideal: 1920 }
+      },
+      audio: false
+    });
 
     stream = newStream;
     video.srcObject = stream;
+
+    // AGUARDA A CÂMERA ESTAR PRONTA
+
+    if (video.readyState < 1) {
+      await new Promise((resolve, reject) => {
+        video.onloadedmetadata = resolve;
+        video.onerror = reject;
+      });
+    }
 
     await video.play();
 
     showSection(cameraArea);
 
   } catch (error) {
+
     stopCamera();
 
-    let mensagem = "Não foi possível abrir a câmera.";
+    console.error("Erro da câmera:", error.name, error.message);
+
+    let mensagem = "Não foi possível abrir a câmera. Tente novamente.";
 
     if (
       error.name === "NotAllowedError" ||
       error.name === "PermissionDeniedError"
     ) {
-      mensagem = "A permissão da câmera foi bloqueada. Acesse as configurações do navegador e permita o uso da câmera.";
+      mensagem = "A permissão da câmera foi bloqueada. Permita o acesso à câmera nas configurações do navegador.";
+
     } else if (error.name === "NotFoundError") {
-      mensagem = "Nenhuma câmera compatível foi encontrada.";
+      mensagem = "Não foi encontrada uma câmera disponível no aparelho.";
+
     } else if (error.name === "NotReadableError") {
-      mensagem = "A câmera está sendo usada por outro aplicativo. Feche os outros aplicativos que utilizam a câmera.";
+      mensagem = "O celular não conseguiu acessar a câmera. Feche outros aplicativos que utilizam a câmera, atualize a página e tente novamente.";
+
+    } else if (error.name === "OverconstrainedError") {
+      mensagem = "Não foi possível utilizar essa configuração de câmera. Tente novamente.";
     }
 
     alert(mensagem);
-    console.error("Erro ao abrir câmera:", error);
+
+  } finally {
+    openingCamera = false;
   }
 }
 
-/* TROCAR CÂMERA */
+/* ==================================================
+   TROCAR CÂMERA
+================================================== */
 
 async function switchCamera() {
+
+  if (openingCamera) return;
+
   facingMode =
     facingMode === "environment" ? "user" : "environment";
 
@@ -589,6 +602,7 @@ function openGallery() {
 /* AJUSTAR FOTO PARA 9:16 */
 
 function drawCover(source) {
+
   const sw = source.videoWidth || source.naturalWidth;
   const sh = source.videoHeight || source.naturalHeight;
 
@@ -616,7 +630,9 @@ function drawCover(source) {
   );
 }
 
-/* DESENHAR NOMES NA FOTO FINAL */
+/* ==================================================
+   DESENHAR NOMES NA FOTO FINAL
+================================================== */
 
 async function drawNamesOnPhoto() {
 
@@ -654,32 +670,54 @@ async function drawNamesOnPhoto() {
   ctx.restore();
 }
 
-/* APLICAR MOLDURA E NOMES */
+/* ==================================================
+   APLICAR MOLDURA E NOMES
+================================================== */
 
 function applyFrame(source, cleanup) {
+
   const frameImage = new Image();
 
   frameImage.onload = async function() {
 
-    canvas.width = 1080;
-    canvas.height = 1920;
+    try {
 
-    drawCover(source);
+      canvas.width = 1080;
+      canvas.height = 1920;
 
-    ctx.drawImage(frameImage, 0, 0, 1080, 1920);
+      drawCover(source);
 
-    await drawNamesOnPhoto();
+      ctx.drawImage(
+        frameImage,
+        0,
+        0,
+        1080,
+        1920
+      );
 
-    if (cleanup) cleanup();
+      await drawNamesOnPhoto();
 
-    stopCamera();
-    showSection(resultArea);
+      if (cleanup) cleanup();
+
+      stopCamera();
+      showSection(resultArea);
+
+    } catch (error) {
+
+      if (cleanup) cleanup();
+
+      console.error(error);
+      alert("Não foi possível finalizar sua fotografia.");
+
+    }
   };
 
   frameImage.onerror = function() {
+
     if (cleanup) cleanup();
 
     alert("Não foi possível carregar moldura.png. Confira o arquivo no GitHub.");
+
   };
 
   frameImage.src = "moldura.png";
@@ -688,6 +726,7 @@ function applyFrame(source, cleanup) {
 /* TIRAR FOTO */
 
 function takePhoto() {
+
   if (!video.videoWidth) {
     alert("Aguarde a câmera iniciar.");
     return;
@@ -696,7 +735,9 @@ function takePhoto() {
   applyFrame(video);
 }
 
-/* ESCOLHER FOTO DA GALERIA */
+/* ==================================================
+   ESCOLHER FOTO DA GALERIA
+================================================== */
 
 document.getElementById("gallery").addEventListener(
   "change",
@@ -710,24 +751,32 @@ document.getElementById("gallery").addEventListener(
     const imageURL = URL.createObjectURL(file);
 
     image.onload = function() {
+
       applyFrame(image, function() {
         URL.revokeObjectURL(imageURL);
       });
+
     };
 
     image.onerror = function() {
+
       URL.revokeObjectURL(imageURL);
       alert("Não foi possível abrir essa fotografia.");
+
     };
 
     image.src = imageURL;
     event.target.value = "";
+
   }
 );
 
-/* BAIXAR FOTO */
+/* ==================================================
+   BAIXAR FOTO
+================================================== */
 
 function downloadPhoto() {
+
   canvas.toBlob(function(blob) {
 
     if (!blob) {
