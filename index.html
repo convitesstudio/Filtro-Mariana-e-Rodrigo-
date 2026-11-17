@@ -3,222 +3,107 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#211c19">
-
-<title>Mariana & Rodrigo</title>
-
-<!-- FONTES -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>Minha Moldura</title>
 
 <style>
-
-/* ==================================================
-   🟨🟨🟨 PERSONALIZE AQUI PARA CADA CASAMENTO 🟨🟨🟨
-================================================== */
-
 :root {
+  /* 🟨 PERSONALIZE AS CORES E FONTES AQUI */
 
-  /* 🟨 FOTO DE FUNDO DA CAPA */
   --imagem-capa: url("foto-capa.jpg");
-
-  /* 🟨 COR DE FUNDO DA CAPA */
-  --cor-fundo-capa: #211c19;
-
-  /* 🟨 COR DOS NOMES DA CAPA */
+  --cor-fundo-capa: #ffffff;
   --cor-nomes: #ffffff;
+  --fonte-nomes: Georgia, serif;
+  --tamanho-nomes: 30px;
 
-  /* 🟨 FONTE DOS NOMES DA CAPA */
-  --fonte-nomes: 'Cormorant Garamond', serif;
-
-  /* 🟨 TAMANHO DOS NOMES DA CAPA */
-  --tamanho-nomes: 54px;
-
-  /* 🟨 COR DA BORDA DO BOTÃO */
   --cor-botao: #ffffff;
-
-  /* 🟨 COR DA ESCRITA DO BOTÃO */
   --cor-texto-botao: #333333;
+  --cor-fundo-botao: rgba(255,255,255,0.92);
+  --fonte-botao: Arial, sans-serif;
 
-  /* 🟨 COR DE FUNDO DO BOTÃO */
-  --cor-fundo-botao: rgba(255,255,255,0.85);
-
-  /* 🟨 FONTE DO BOTÃO */
-  --fonte-botao: 'Montserrat', sans-serif;
-
-  /* 🟨 COR DOS BOTÕES REDONDOS DA CÂMERA */
-  --cor-botoes-camera: rgba(255,255,255,0.25);
-
-  /* 🟨 COR DAS LEGENDAS ACIMA DOS BOTÕES */
+  --cor-botoes-camera: #ffffff;
   --cor-legendas-botoes: #ffffff;
-
-  /* 🟨 FONTE DAS LEGENDAS DOS BOTÕES */
-  --fonte-legendas: 'Montserrat', sans-serif;
-
-  /* 🟨 TAMANHO DAS LEGENDAS DOS BOTÕES */
+  --fonte-legendas: Arial, sans-serif;
   --tamanho-legendas: 10px;
 
-  /* 🟨 COR DO CONTROLE DE SUAVIZAÇÃO */
   --cor-suavizacao: #ffffff;
-
-  /* 🟨 COR DE FUNDO DA TELA DE RESULTADO */
-  --cor-fundo-resultado: #f5eee8;
-
-  /* 🟨 COR DOS TEXTOS DO RESULTADO */
-  --cor-texto-resultado: #51443c;
-
+  --cor-fundo-resultado: #ffffff;
+  --cor-texto-resultado: #333333;
 }
 
-/* CONFIGURAÇÕES GERAIS */
-
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html, body {
   width: 100%;
-  min-height: 100%;
-  background: #171412;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-.app {
-  width: 100%;
-  max-width: 480px;
-  min-height: 100vh;
-  margin: auto;
+  height: 100%;
   overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #000;
 }
 
-/* ==================================================
-   CAPA
-================================================== */
+/* CAPA INICIAL */
 
 #home {
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
-  min-height: 550px;
-}
-
-.hero {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  background-color: var(--cor-fundo-capa);
-}
-
-.hero-bg {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  background-image: var(--imagem-capa);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(20,15,12,0.10),
-    rgba(20,15,12,0.35)
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding: 50px 20px;
+  background-color: var(--cor-fundo-capa);
+  background-image: var(--imagem-capa);
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
 }
 
-/* NOMES DA CAPA */
-
-.names {
+#coupleNames {
+  color: var(--cor-nomes);
   font-family: var(--fonte-nomes);
   font-size: var(--tamanho-nomes);
-  font-weight: normal;
-  line-height: 1.1;
-  color: var(--cor-nomes);
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-.names span {
-  display: block;
-  font-size: 25px;
-  font-style: italic;
-  margin: 6px 0;
-}
-
-/* BOTÃO ACESSAR MOLDURA */
-
-.access-button {
-  margin-top: 35px;
-  padding: 17px 38px;
-  border: 1px solid var(--cor-botao);
-  border-radius: 50px;
+.main-button {
+  border: none;
+  border-radius: 30px;
+  padding: 15px 30px;
   background: var(--cor-fundo-botao);
   color: var(--cor-texto-botao);
   font-family: var(--fonte-botao);
-  font-size: 11px;
-  letter-spacing: 2px;
-  backdrop-filter: blur(8px);
+  font-size: 12px;
+  letter-spacing: 1px;
   cursor: pointer;
 }
 
-/* ==================================================
-   CÂMERA EM TELA CHEIA
-================================================== */
+/* TELA DA CÂMERA */
 
 #cameraArea {
-  display: none;
   position: fixed;
-  inset: 0;
-  z-index: 20;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
-  background: #000;
-}
-
-.stage {
-  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   background: #000;
+  display: none;
+  overflow: hidden;
+  z-index: 2;
 }
 
 #video {
   position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1);
-  transition: filter 0.15s ease;
+  inset: 0;
+  transform: none;
 }
-
-/* 🟨 MOLDURA DO CASAMENTO */
 
 #frame {
   position: absolute;
@@ -227,464 +112,304 @@ html, body {
   height: 100%;
   object-fit: fill;
   pointer-events: none;
+  z-index: 3;
 }
 
-/* ==================================================
-   CONTROLE VERTICAL DE SUAVIZAÇÃO
-================================================== */
+/* CONTROLE DE SUAVIZAÇÃO */
 
 .smooth-control {
   position: absolute;
-  z-index: 26;
-
-  /* POSIÇÃO NA LATERAL DIREITA */
+  z-index: 5;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--cor-suavizacao);
+  text-shadow: 0 1px 5px rgba(0,0,0,0.7);
+}
 
+.smooth-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-family: var(--fonte-legendas);
+}
+
+.smooth-icon {
+  font-size: 19px;
+}
+
+#smoothSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 105px;
+  height: 3px;
+  transform: rotate(-90deg);
+  background: rgba(255,255,255,0.7);
+  border-radius: 10px;
+  outline: none;
+  margin: 45px 0;
+  cursor: pointer;
+}
+
+#smoothSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--cor-suavizacao);
+  border: 2px solid rgba(0,0,0,0.25);
+}
+
+#smoothSlider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--cor-suavizacao);
+  border: 2px solid rgba(0,0,0,0.25);
+}
+
+#smoothValue {
+  font-size: 10px;
+  font-family: var(--fonte-legendas);
+}
+
+/* BOTÕES DA CÂMERA */
+
+.camera-controls {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  z-index: 6;
+}
+
+.camera-control {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 9px;
-
-  padding: 10px 7px;
-  border-radius: 24px;
-  background: rgba(0,0,0,0.28);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-/* ÍCONE DE SUAVIZAÇÃO */
-
-.smooth-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--cor-suavizacao);
-  font-size: 19px;
-}
-
-/* TEXTO DO CONTROLE */
-
-.smooth-label {
-  color: var(--cor-suavizacao);
-  font-family: var(--fonte-legendas);
-  font-size: 8px;
-  letter-spacing: 0.8px;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-
-/* VALOR DA SUAVIZAÇÃO */
-
-.smooth-value {
-  color: var(--cor-suavizacao);
-  font-family: var(--fonte-legendas);
-  font-size: 9px;
-  font-weight: 500;
-  min-width: 30px;
-  text-align: center;
-}
-
-/* CONTROLE DESLIZANTE VERTICAL */
-
-.smooth-slider {
-  appearance: none;
-  -webkit-appearance: none;
-
-  width: 105px;
-  height: 4px;
-
-  transform: rotate(-90deg);
-  margin: 48px 0;
-
-  background: rgba(255,255,255,0.35);
-  border-radius: 10px;
-  outline: none;
-  cursor: pointer;
-}
-
-.smooth-slider::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid rgba(0,0,0,0.2);
-}
-
-.smooth-slider::-moz-range-thumb {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid rgba(0,0,0,0.2);
-}
-
-/* ==================================================
-   BOTÕES E LEGENDAS DA CÂMERA
-================================================== */
-
-.camera-controls {
-  position: absolute;
-  z-index: 25;
-  bottom: max(30px, env(safe-area-inset-bottom));
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-evenly;
-  padding: 0 12px;
-  gap: 8px;
-}
-
-.control-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  flex: 1;
-}
-
-/* 🟨 LEGENDAS ACIMA DOS BOTÕES */
-
-.control-label {
+  border: none;
+  background: transparent;
   color: var(--cor-legendas-botoes);
   font-family: var(--fonte-legendas);
   font-size: var(--tamanho-legendas);
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-align: center;
-  white-space: nowrap;
-  text-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  cursor: pointer;
+  min-width: 65px;
 }
 
-/* BOTÕES REDONDOS */
-
-.round-btn {
-  width: 60px;
-  height: 60px;
-  flex-shrink: 0;
+.round-button {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.85);
-  background: var(--cor-botoes-camera);
-  color: white;
-  font-size: 25px;
+  border: 2px solid var(--cor-botoes-camera);
+  background: rgba(255,255,255,0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(8px);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  color: var(--cor-botoes-camera);
+  font-size: 20px;
 }
 
-.round-btn.shutter {
-  width: 78px;
-  height: 78px;
-  border: 5px solid rgba(255,255,255,0.45);
-  background: white;
-  color: #333;
-  font-size: 27px;
+.capture-button .round-button {
+  width: 66px;
+  height: 66px;
+  border: 4px solid var(--cor-botoes-camera);
+  background: rgba(255,255,255,0.2);
+  position: relative;
 }
 
-/* ==================================================
-   TELA DE RESULTADO
-================================================== */
+.capture-button .round-button::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: var(--cor-botoes-camera);
+}
+
+/* TELA DO RESULTADO */
 
 #resultArea {
+  position: fixed;
+  inset: 0;
   display: none;
-  position: relative;
-  z-index: 30;
-  min-height: 100vh;
-  padding: 25px 18px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
   background: var(--cor-fundo-resultado);
-  color: var(--cor-texto-resultado);
-  text-align: center;
+  z-index: 10;
+  overflow-y: auto;
 }
 
-.result-title {
-  font-family: var(--fonte-nomes);
-  font-size: 27px;
-  font-weight: normal;
-  margin-top: 20px;
-}
-
-.result-description {
-  font-size: 13px;
-  margin-top: 8px;
-  color: #76675d;
-}
-
-/* FOTOGRAFIA FINAL */
-
-#resultCanvas {
+#photoCanvas {
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
-  margin: 20px 0;
+  max-width: 100%;
+  max-height: calc(100% - 100px);
+  object-fit: contain;
 }
-
-/* BOTÕES PEQUENOS ABAIXO DA FOTOGRAFIA */
 
 .result-buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: 7px;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 15px;
 }
 
 .result-button {
-  flex: 1;
-  min-width: 0;
-  min-height: 43px;
-  padding: 10px 3px;
-  border: 1px solid #c7b8a9;
-  border-radius: 30px;
-  background: transparent;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 20px;
+  padding: 10px 11px;
+  background: var(--cor-fundo-botao);
   color: var(--cor-texto-resultado);
-  font-size: 9px;
-  letter-spacing: 0.3px;
   font-family: var(--fonte-botao);
-  cursor: pointer;
+  font-size: 8px;
+  letter-spacing: 0.3px;
   white-space: nowrap;
+  cursor: pointer;
 }
 
-.result-button.primary {
-  background: var(--cor-texto-resultado);
+/* MENSAGENS */
+
+#message {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 350px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.8);
   color: white;
-  border-color: var(--cor-texto-resultado);
-}
-
-#gallery {
+  font-size: 13px;
+  text-align: center;
   display: none;
+  z-index: 20;
 }
-
-/* TELAS PEQUENAS */
 
 @media (max-width: 360px) {
-  .camera-controls {
-    padding: 0 8px;
+  .result-buttons {
     gap: 4px;
   }
 
-  .round-btn {
-    width: 53px;
-    height: 53px;
-  }
-
-  .round-btn.shutter {
-    width: 68px;
-    height: 68px;
-  }
-
-  .control-label {
-    font-size: 8px;
-    letter-spacing: 0.4px;
-  }
-
-  .result-buttons {
-    gap: 5px;
-  }
-
   .result-button {
-    font-size: 8px;
-    padding: 9px 2px;
+    padding: 9px 7px;
+    font-size: 7px;
+  }
+
+  .camera-controls {
+    gap: 20px;
   }
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
-<!-- ==================================================
-     CAPA
-     🟨 ALTERE OS NOMES DOS NOIVOS AQUI
-================================================== -->
+<!-- CAPA INICIAL -->
 
 <section id="home">
+  <div id="coupleNames">NOME 1 & NOME 2</div>
 
-  <div class="hero">
-
-    <div class="hero-bg"></div>
-    <div class="overlay"></div>
-
-    <div class="hero-content">
-
-      <h1 class="names">
-        Mariana
-        <span>&</span>
-        Rodrigo
-      </h1>
-
-      <!-- 🟨 TEXTO DO BOTÃO DA CAPA -->
-
-      <button class="access-button" onclick="openCamera()">
-        ACESSAR MOLDURA
-      </button>
-
-    </div>
-
-  </div>
-
+  <button class="main-button" onclick="openCamera()">
+    ACESSAR MOLDURA
+  </button>
 </section>
 
-<!-- ==================================================
-     CÂMERA
-================================================== -->
+<!-- CÂMERA -->
 
 <section id="cameraArea">
 
-  <div class="stage">
+  <video id="video" autoplay playsinline muted></video>
 
-    <video id="video" autoplay playsinline></video>
+  <img
+    id="frame"
+    src="moldura.png"
+    alt="Moldura personalizada"
+  >
 
-    <!-- 🟨 MOLDURA COM NOMES JÁ DESENHADOS -->
-
-    <img
-      id="frame"
-      src="moldura.png"
-      alt="Moldura personalizada"
-    >
-
-  </div>
-
-  <!-- CONTROLE VERTICAL DE SUAVIZAÇÃO -->
+  <!-- SUAVIZAÇÃO VISÍVEL DESDE A ABERTURA DA CÂMERA -->
 
   <div class="smooth-control">
-
-    <div class="smooth-icon">✧</div>
-
-    <span class="smooth-label">
-      SUAVIZAR PELE
-    </span>
+    <span class="smooth-title">SUAVIZAR PELE</span>
+    <span class="smooth-icon">✧</span>
 
     <input
       type="range"
       id="smoothSlider"
-      class="smooth-slider"
       min="0"
       max="100"
-      value="0"
       step="5"
-      aria-label="Intensidade da suavização"
+      value="0"
+      aria-label="Suavizar pele"
     >
 
-    <span class="smooth-value" id="smoothValue">
-      0%
-    </span>
-
+    <span id="smoothValue">0%</span>
   </div>
 
-  <!-- BOTÕES DA CÂMERA -->
+  <!-- CONTROLES INFERIORES -->
 
   <div class="camera-controls">
 
-    <div class="control-item">
+    <button class="camera-control" onclick="openGallery()">
+      <span class="round-button">▧</span>
+      <span>GALERIA</span>
+    </button>
 
-      <span class="control-label">
-        GALERIA
-      </span>
+    <button class="camera-control capture-button" onclick="takePhoto()">
+      <span class="round-button"></span>
+      <span>FOTOGRAFAR</span>
+    </button>
 
-      <button
-        class="round-btn"
-        onclick="openGallery()"
-        aria-label="Abrir galeria"
-      >
-        ▧
-      </button>
-
-    </div>
-
-    <div class="control-item">
-
-      <span class="control-label">
-        FOTOGRAFAR
-      </span>
-
-      <button
-        class="round-btn shutter"
-        onclick="takePhoto()"
-        aria-label="Tirar foto"
-      >
-        ●
-      </button>
-
-    </div>
-
-    <div class="control-item">
-
-      <span class="control-label">
-        TROCAR CÂMERA
-      </span>
-
-      <button
-        class="round-btn"
-        onclick="switchCamera()"
-        aria-label="Trocar câmera"
-      >
-        ↻
-      </button>
-
-    </div>
+    <button class="camera-control" onclick="switchCamera()">
+      <span class="round-button">↻</span>
+      <span>TROCAR CÂMERA</span>
+    </button>
 
   </div>
 
+  <input
+    type="file"
+    id="galleryInput"
+    accept="image/*"
+    hidden
+  >
+
 </section>
 
-<input
-  type="file"
-  id="gallery"
-  accept="image/*"
->
-
-<!-- ==================================================
-     RESULTADO
-================================================== -->
+<!-- RESULTADO -->
 
 <section id="resultArea">
 
-  <h2 class="result-title">
-    Sua lembrança está pronta!
-  </h2>
-
-  <p class="result-description">
-    Salve sua fotografia especial.
-  </p>
-
-  <canvas id="resultCanvas"></canvas>
+  <canvas id="photoCanvas" width="1080" height="1920"></canvas>
 
   <div class="result-buttons">
 
-    <button
-      class="result-button primary"
-      onclick="downloadPhoto()"
-    >
+    <button class="result-button" onclick="savePhoto()">
       SALVAR MINHA FOTO
     </button>
 
-    <button
-      class="result-button"
-      onclick="goHome()"
-    >
+    <button class="result-button" onclick="goHome()">
       VOLTAR AO INÍCIO
     </button>
 
-    <button
-      class="result-button"
-      onclick="openCamera()"
-    >
+    <button class="result-button" onclick="takeAnotherPhoto()">
       TIRAR OUTRA FOTO
     </button>
 
@@ -692,66 +417,109 @@ html, body {
 
 </section>
 
-</div>
+<div id="message"></div>
 
 <script>
-
-/* ELEMENTOS */
-
-const video = document.getElementById("video");
-const canvas = document.getElementById("resultCanvas");
-const ctx = canvas.getContext("2d");
-
 const home = document.getElementById("home");
 const cameraArea = document.getElementById("cameraArea");
 const resultArea = document.getElementById("resultArea");
+const video = document.getElementById("video");
+const frame = document.getElementById("frame");
+const canvas = document.getElementById("photoCanvas");
+const ctx = canvas.getContext("2d");
+const galleryInput = document.getElementById("galleryInput");
 
 const smoothSlider = document.getElementById("smoothSlider");
 const smoothValue = document.getElementById("smoothValue");
 
 let stream = null;
 let facingMode = "environment";
-let openingCamera = false;
+let currentPhoto = null;
+let galleryObjectUrl = null;
 
-/* ==================================================
-   SUAVIZAÇÃO DE PELE
-================================================== */
+/* MENSAGENS */
 
-/*
-   ATENÇÃO:
-   Esta é uma suavização visual simples.
-   Ela aplica um desfoque leve à imagem inteira,
-   não identifica exclusivamente a pele.
-*/
+function showMessage(text) {
+  const message = document.getElementById("message");
+  message.textContent = text;
+  message.style.display = "block";
+
+  setTimeout(() => {
+    message.style.display = "none";
+  }, 4500);
+}
+
+/* SUAVIZAÇÃO */
 
 function getSmoothBlur() {
   return Number(smoothSlider.value) * 0.025;
 }
 
 function updateSmoothness() {
+  const value = Number(smoothSlider.value);
 
-  const level = Number(smoothSlider.value);
+  smoothValue.textContent = value + "%";
 
-  smoothValue.textContent = level + "%";
-
-  const blur = getSmoothBlur();
-
-  video.style.filter = blur > 0
-    ? `blur(${blur}px)`
+  video.style.filter = value > 0
+    ? `blur(${getSmoothBlur()}px)`
     : "none";
 }
 
 smoothSlider.addEventListener("input", updateSmoothness);
 
-/* NAVEGAÇÃO */
+/* ABRIR CÂMERA */
 
-function showSection(section) {
+async function openCamera() {
+  stopCamera();
+
   home.style.display = "none";
-  cameraArea.style.display = "none";
   resultArea.style.display = "none";
+  cameraArea.style.display = "block";
 
-  section.style.display = "block";
-  window.scrollTo(0, 0);
+  updateSmoothness();
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    showMessage("Seu navegador não permite acessar a câmera. Abra esta página em um navegador atualizado e use HTTPS.");
+    return;
+  }
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        facingMode: { ideal: facingMode },
+        width: { ideal: 1080 },
+        height: { ideal: 1920 }
+      }
+    });
+
+    video.srcObject = stream;
+
+    await new Promise((resolve, reject) => {
+      if (video.readyState >= 1) {
+        resolve();
+      } else {
+        video.onloadedmetadata = resolve;
+        video.onerror = reject;
+      }
+    });
+
+    await video.play();
+
+  } catch (error) {
+    console.error(error);
+
+    cameraArea.style.display = "none";
+    home.style.display = "flex";
+
+    if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
+      showMessage("Permita o acesso à câmera nas configurações do navegador.");
+    } else if (error.name === "NotReadableError") {
+      showMessage("A câmera está sendo usada por outro aplicativo. Feche outros aplicativos que estejam usando a câmera e tente novamente.");
+    } else {
+      showMessage("Não foi possível abrir a câmera. Verifique as permissões e tente novamente.");
+    }
+  }
 }
 
 /* ENCERRAR CÂMERA */
@@ -766,270 +534,162 @@ function stopCamera() {
   video.srcObject = null;
 }
 
-/* ==================================================
-   ABRIR CÂMERA
-   CÂMERA TRASEIRA COMO PADRÃO
-================================================== */
-
-async function openCamera() {
-
-  if (openingCamera) return;
-
-  openingCamera = true;
-
-  try {
-
-    stopCamera();
-
-    if (!navigator.mediaDevices?.getUserMedia) {
-      throw new Error("Câmera indisponível neste navegador.");
-    }
-
-    const newStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: {
-          ideal: facingMode
-        },
-        width: { ideal: 1080 },
-        height: { ideal: 1920 }
-      },
-      audio: false
-    });
-
-    stream = newStream;
-    video.srcObject = stream;
-
-    if (video.readyState < 1) {
-      await new Promise((resolve, reject) => {
-        video.onloadedmetadata = resolve;
-        video.onerror = reject;
-      });
-    }
-
-    await video.play();
-
-    updateSmoothness();
-    showSection(cameraArea);
-
-  } catch (error) {
-
-    stopCamera();
-
-    console.error("Erro da câmera:", error.name, error.message);
-
-    let mensagem = "Não foi possível abrir a câmera. Tente novamente.";
-
-    if (
-      error.name === "NotAllowedError" ||
-      error.name === "PermissionDeniedError"
-    ) {
-      mensagem = "A permissão da câmera foi bloqueada. Permita o acesso à câmera nas configurações do navegador.";
-
-    } else if (error.name === "NotFoundError") {
-      mensagem = "Não foi encontrada uma câmera disponível no aparelho.";
-
-    } else if (error.name === "NotReadableError") {
-      mensagem = "O celular não conseguiu acessar a câmera. Feche outros aplicativos que utilizam a câmera, atualize a página e tente novamente.";
-
-    } else if (error.name === "OverconstrainedError") {
-      mensagem = "Não foi possível utilizar essa configuração de câmera. Tente novamente.";
-    }
-
-    alert(mensagem);
-
-  } finally {
-    openingCamera = false;
-  }
-}
-
 /* TROCAR CÂMERA */
 
 async function switchCamera() {
-
-  if (openingCamera) return;
-
-  facingMode =
-    facingMode === "environment" ? "user" : "environment";
-
+  facingMode = facingMode === "environment" ? "user" : "environment";
   await openCamera();
+}
+
+/* CAPTURAR IMAGEM */
+
+function takePhoto() {
+  if (!video.srcObject || video.readyState < 2) {
+    showMessage("Aguarde a câmera carregar.");
+    return;
+  }
+
+  drawCover(video);
 }
 
 /* ABRIR GALERIA */
 
 function openGallery() {
-  document.getElementById("gallery").click();
+  galleryInput.click();
 }
 
-/* ==================================================
-   AJUSTAR FOTO PARA 9:16
-================================================== */
+galleryInput.addEventListener("change", function(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  if (galleryObjectUrl) {
+    URL.revokeObjectURL(galleryObjectUrl);
+  }
+
+  galleryObjectUrl = URL.createObjectURL(file);
+
+  const image = new Image();
+
+  image.onload = function() {
+    drawCover(image);
+    URL.revokeObjectURL(galleryObjectUrl);
+    galleryObjectUrl = null;
+    galleryInput.value = "";
+  };
+
+  image.onerror = function() {
+    showMessage("Não foi possível abrir essa imagem.");
+    URL.revokeObjectURL(galleryObjectUrl);
+    galleryObjectUrl = null;
+    galleryInput.value = "";
+  };
+
+  image.src = galleryObjectUrl;
+});
+
+/* AJUSTAR IMAGEM PARA 9:16 */
 
 function drawCover(source) {
+  const sourceWidth = source.videoWidth || source.naturalWidth;
+  const sourceHeight = source.videoHeight || source.naturalHeight;
 
-  const sw = source.videoWidth || source.naturalWidth;
-  const sh = source.videoHeight || source.naturalHeight;
+  if (!sourceWidth || !sourceHeight) {
+    showMessage("Não foi possível carregar a imagem.");
+    return;
+  }
 
-  const width = 1080;
-  const height = 1920;
+  const targetRatio = 1080 / 1920;
+  const sourceRatio = sourceWidth / sourceHeight;
 
-  const scale = Math.max(width / sw, height / sh);
+  let sx = 0;
+  let sy = 0;
+  let sw = sourceWidth;
+  let sh = sourceHeight;
 
-  const cropWidth = width / scale;
-  const cropHeight = height / scale;
+  if (sourceRatio > targetRatio) {
+    sw = sourceHeight * targetRatio;
+    sx = (sourceWidth - sw) / 2;
+  } else {
+    sh = sourceWidth / targetRatio;
+    sy = (sourceHeight - sh) / 2;
+  }
 
-  const sx = (sw - cropWidth) / 2;
-  const sy = (sh - cropHeight) / 2;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   const blur = getSmoothBlur();
 
   ctx.save();
-
-  ctx.filter = blur > 0
-    ? `blur(${blur * (1080 / cameraArea.clientHeight)}px)`
-    : "none";
+  ctx.filter = blur > 0 ? `blur(${blur}px)` : "none";
 
   ctx.drawImage(
     source,
-    sx,
-    sy,
-    cropWidth,
-    cropHeight,
-    0,
-    0,
-    width,
-    height
+    sx, sy, sw, sh,
+    0, 0, canvas.width, canvas.height
   );
 
   ctx.restore();
+
+  applyFrame();
+
+  currentPhoto = canvas.toDataURL("image/png");
+
+  stopCamera();
+
+  cameraArea.style.display = "none";
+  resultArea.style.display = "flex";
 }
 
-/* ==================================================
-   APLICAR MOLDURA
-   OS NOMES JÁ ESTÃO NA PRÓPRIA MOLDURA.
-================================================== */
+/* APLICAR MOLDURA */
 
-function applyFrame(source, cleanup) {
-
-  const frameImage = new Image();
-
-  frameImage.onload = function() {
-
-    canvas.width = 1080;
-    canvas.height = 1920;
-
-    // DESENHA A FOTO COM A SUAVIZAÇÃO ESCOLHIDA
-
-    drawCover(source);
-
-    // DESENHA A MOLDURA COMPLETA E NÍTIDA
-
-    ctx.drawImage(
-      frameImage,
-      0,
-      0,
-      1080,
-      1920
-    );
-
-    if (cleanup) cleanup();
-
-    stopCamera();
-    showSection(resultArea);
-  };
-
-  frameImage.onerror = function() {
-
-    if (cleanup) cleanup();
-
-    alert("Não foi possível carregar moldura.png. Confira o arquivo no GitHub.");
-
-  };
-
-  frameImage.src = "moldura.png";
+function applyFrame() {
+  if (frame.complete && frame.naturalWidth > 0) {
+    ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+  } else {
+    frame.onload = function() {
+      ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+      currentPhoto = canvas.toDataURL("image/png");
+    };
+  }
 }
 
-/* TIRAR FOTO */
+/* SALVAR FOTO */
 
-function takePhoto() {
-
-  if (!video.videoWidth) {
-    alert("Aguarde a câmera iniciar.");
+function savePhoto() {
+  if (!currentPhoto) {
+    showMessage("Nenhuma foto disponível para salvar.");
     return;
   }
 
-  applyFrame(video);
+  const link = document.createElement("a");
+  link.href = currentPhoto;
+  link.download = "minha-foto-com-moldura.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-/* ==================================================
-   ESCOLHER FOTO DA GALERIA
-================================================== */
-
-document.getElementById("gallery").addEventListener(
-  "change",
-  function(event) {
-
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    const image = new Image();
-    const imageURL = URL.createObjectURL(file);
-
-    image.onload = function() {
-
-      applyFrame(image, function() {
-        URL.revokeObjectURL(imageURL);
-      });
-
-    };
-
-    image.onerror = function() {
-
-      URL.revokeObjectURL(imageURL);
-      alert("Não foi possível abrir essa fotografia.");
-
-    };
-
-    image.src = imageURL;
-    event.target.value = "";
-
-  }
-);
-
-/* ==================================================
-   BAIXAR FOTO
-================================================== */
-
-function downloadPhoto() {
-
-  canvas.toBlob(function(blob) {
-
-    if (!blob) {
-      alert("Não foi possível gerar a foto.");
-      return;
-    }
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "lembranca-mariana-e-rodrigo.png";
-
-    link.click();
-
-    setTimeout(function() {
-      URL.revokeObjectURL(url);
-    }, 1000);
-
-  }, "image/png");
-}
-
-/* VOLTAR À CAPA */
+/* VOLTAR AO INÍCIO */
 
 function goHome() {
   stopCamera();
-  showSection(home);
+
+  currentPhoto = null;
+  resultArea.style.display = "none";
+  cameraArea.style.display = "none";
+  home.style.display = "flex";
 }
+
+/* TIRAR OUTRA FOTO */
+
+function takeAnotherPhoto() {
+  currentPhoto = null;
+  openCamera();
+}
+
+/* LIMPEZA */
+
+window.addEventListener("pagehide", stopCamera);
 
 </script>
 
