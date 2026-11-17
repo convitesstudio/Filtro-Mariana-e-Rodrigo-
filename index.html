@@ -3,39 +3,24 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f5eee8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#211c19">
 
-<title>Um momento para guardar</title>
+<title>Mariana & Rodrigo</title>
 
 <style>
-
-/* =================================
-   PERSONALIZAÇÃO DO CASAMENTO
-================================= */
-
-:root {
-  --cor-principal: #727640;
-  --cor-texto: #000000;
-  --cor-detalhes: #e8d8ca;
-  --cor-botao: rgba(255,255,255,0.16);
-  --cor-borda: rgba(255,255,255,0.65);
-}
-
-/* =================================
-   CONFIGURAÇÕES GERAIS
-================================= */
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: #171412;
+  color: white;
   font-family: Arial, sans-serif;
-  background: #1e1917;
-  color: var(--cor-texto);
 }
 
 .app {
@@ -44,33 +29,29 @@ body {
   min-height: 100vh;
   margin: auto;
   overflow: hidden;
-  background: #1e1917;
 }
 
-/* =================================
-   CAPA PRINCIPAL
-================================= */
+/* CAPA */
 
 #home {
-  min-height: 100vh;
-  min-height: 100svh;
-  position: relative;
-  overflow: hidden;
-}
-
-.cover {
-  position: relative;
   width: 100%;
   height: 100vh;
   height: 100svh;
-  min-height: 650px;
+  min-height: 550px;
+}
+
+.hero {
+  height: 100%;
+  width: 100%;
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   text-align: center;
+  overflow: hidden;
 }
 
-.cover-photo {
+.hero-bg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -79,153 +60,74 @@ body {
   object-position: center;
 }
 
-.cover-overlay {
+.overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(20,15,12,0.05) 10%,
-    rgba(20,15,12,0.10) 35%,
-    rgba(20,15,12,0.45) 65%,
-    rgba(20,15,12,0.83) 100%
+    rgba(20,15,12,.02) 20%,
+    rgba(20,15,12,.15) 50%,
+    rgba(20,15,12,.75) 100%
   );
 }
 
-.cover-content {
+.hero-content {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 35px 25px 45px;
+  padding: 35px 24px 55px;
 }
 
-.small-title {
+.names {
   font-family: Georgia, serif;
-  font-size: 13px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  font-size: clamp(40px, 11vw, 52px);
   font-weight: normal;
-  margin-bottom: 22px;
-  color: var(--cor-texto);
+  line-height: 1.1;
+  color: #fffaf2;
 }
 
-.couple-names {
-  font-family: Georgia, serif;
-  font-size: clamp(35px, 10vw, 49px);
-  line-height: 1.15;
-  font-weight: normal;
-  color: var(--cor-texto);
-}
-
-.couple-names span {
+.names span {
   display: block;
   font-size: 25px;
   font-style: italic;
-  margin: 3px 0;
-  color: var(--cor-detalhes);
+  margin: 6px 0;
+  color: #e8d8ca;
 }
 
-.separator {
-  width: 38px;
-  height: 1px;
-  background: var(--cor-detalhes);
-  margin: 24px auto;
-}
-
-.main-title {
-  font-family: Georgia, serif;
-  font-size: 20px;
-  font-weight: normal;
-  letter-spacing: 0.3px;
-  margin-bottom: 12px;
-  color: var(--cor-texto);
-}
-
-.cover-description {
-  font-size: 13px;
-  line-height: 1.7;
-  max-width: 290px;
-  margin: auto;
-  color: rgba(255,250,245,0.88);
-}
-
-/* =================================
-   BOTÕES DA CAPA
-================================= */
-
-.cover-buttons {
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.button {
-  width: 100%;
-  min-height: 53px;
-  border: 1px solid var(--cor-borda);
-  border-radius: 3px;
-  padding: 16px;
+.access-button {
+  margin-top: 35px;
+  padding: 17px 38px;
+  border: 1px solid rgba(255,255,255,.85);
+  border-radius: 50px;
+  background: rgba(255,255,255,.16);
+  color: white;
   font-size: 11px;
   letter-spacing: 2px;
-  font-weight: normal;
+  backdrop-filter: blur(8px);
   cursor: pointer;
-  text-align: center;
-  color: var(--cor-texto);
-  background: var(--cor-botao);
 }
 
-.button-primary {
-  background: var(--cor-principal);
-  border-color: var(--cor-principal);
-  color: #51443c;
-}
+/* CÂMERA EM TELA CHEIA */
 
-.button-secondary {
-  background: rgba(30,25,23,0.25);
-}
-
-.button:active {
-  opacity: 0.8;
-}
-
-input[type="file"] {
+#cameraArea {
   display: none;
-}
-
-/* =================================
-   TELA DA CÂMERA
-================================= */
-
-#cameraArea,
-#resultArea {
-  display: none;
-  min-height: 100vh;
-  padding: 25px 18px;
-  background: var(--cor-principal);
-  color: #51443c;
-  text-align: center;
-}
-
-.section-heading {
-  font-family: Georgia, serif;
-  font-size: 27px;
-  font-weight: normal;
-  margin: 15px 0 8px;
-}
-
-.section-description {
-  font-size: 13px;
-  margin-bottom: 22px;
-  color: #76675d;
-}
-
-.camera-stage {
-  position: relative;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
   width: 100%;
-  aspect-ratio: 9 / 16;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: #000;
-  margin-bottom: 20px;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
 }
 
 #video {
@@ -245,36 +147,58 @@ input[type="file"] {
   pointer-events: none;
 }
 
-.camera-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+/* BOTÕES REDONDOS INFERIORES */
 
-.camera-buttons .button {
-  color: #51443c;
-  border-color: #c7b8a9;
-  background: transparent;
-}
-
-.camera-buttons .button-primary {
-  background: #51443c;
-  color: white;
-  border-color: #51443c;
-}
-
-/* =================================
-   RESULTADO FINAL
-================================= */
-
-#resultCanvas {
-  display: block;
+.camera-controls {
+  position: absolute;
+  z-index: 25;
+  bottom: max(35px, env(safe-area-inset-bottom));
+  left: 0;
   width: 100%;
-  height: auto;
-  margin: 22px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 20px;
 }
 
-.result-heading {
+.round-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.85);
+  background: rgba(255,255,255,.22);
+  color: white;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.round-btn.shutter {
+  width: 76px;
+  height: 76px;
+  border: 5px solid rgba(255,255,255,.45);
+  background: white;
+  color: #333;
+  font-size: 27px;
+}
+
+/* RESULTADO */
+
+#resultArea {
+  display: none;
+  position: relative;
+  z-index: 30;
+  min-height: 100vh;
+  padding: 25px 18px;
+  background: #f5eee8;
+  color: #51443c;
+  text-align: center;
+}
+
+.result-title {
   font-family: Georgia, serif;
   font-size: 27px;
   font-weight: normal;
@@ -287,34 +211,41 @@ input[type="file"] {
   color: #76675d;
 }
 
+#resultCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+}
+
 .result-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.result-buttons .button {
-  color: #51443c;
-  border-color: #c7b8a9;
+.result-button {
+  width: 100%;
+  padding: 17px;
+  border: 1px solid #c7b8a9;
+  border-radius: 40px;
   background: transparent;
+  color: #51443c;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
 }
 
-.result-buttons .button-primary {
+.result-button.primary {
   background: #51443c;
   color: white;
 }
 
-/* =================================
-   INFORMAÇÃO
-================================= */
+/* GALERIA */
 
-.permission-text {
-  font-size: 11px;
-  color: #8d8178;
-  line-height: 1.6;
-  margin-top: 18px;
+#gallery {
+  display: none;
 }
-
 </style>
 </head>
 
@@ -322,70 +253,34 @@ input[type="file"] {
 
 <div class="app">
 
-<!-- =========================
-     CAPA DOS NOIVOS
-========================= -->
+<!-- CAPA MARIANA E RODRIGO -->
 
 <section id="home">
 
-  <div class="cover">
+  <div class="hero">
 
     <img
       src="foto-capa.jpg"
-      class="cover-photo"
-      alt="Fotografia dos noivos"
+      class="hero-bg"
+      alt="Mariana e Rodrigo"
     >
 
-    <div class="cover-overlay"></div>
+    <div class="overlay"></div>
 
-    <div class="cover-content">
+    <div class="hero-content">
 
-      <p class="small-title">
-        Com carinho, para vocês
-      </p>
-
-      <h1 class="couple-names">
+      <h1 class="names">
         Mariana
         <span>&</span>
-        Rodrigo 
+        Rodrigo
       </h1>
 
-      <div class="separator"></div>
-
-      <h2 class="main-title">
-        Um momento para guardar
-      </h2>
-
-      <p class="cover-description">
-        Registre esse dia especial e leve consigo uma lembrança desse momento tão único.
-      </p>
-
-      <div class="cover-buttons">
-
-        <button
-          class="button button-primary"
-          onclick="openCamera()"
-        >
-          ABRIR CÂMERA
-        </button>
-
-        <label class="button button-secondary">
-
-          ESCOLHER FOTO DA GALERIA
-
-          <input
-            type="file"
-            id="gallery"
-            accept="image/*"
-          >
-
-        </label>
-
-      </div>
-
-      <p class="permission-text">
-        Permita o acesso à câmera quando solicitado.
-      </p>
+      <button
+        class="access-button"
+        onclick="openCamera()"
+      >
+        ACESSAR FILTRO
+      </button>
 
     </div>
 
@@ -393,21 +288,11 @@ input[type="file"] {
 
 </section>
 
-<!-- =========================
-     CÂMERA
-========================= -->
+<!-- CÂMERA -->
 
 <section id="cameraArea">
 
-  <h2 class="section-heading">
-    Registre esse momento
-  </h2>
-
-  <p class="section-description">
-    Posicione-se e faça sua fotografia.
-  </p>
-
-  <div class="camera-stage">
+  <div class="stage">
 
     <video
       id="video"
@@ -423,45 +308,52 @@ input[type="file"] {
 
   </div>
 
-  <div class="camera-buttons">
+  <div class="camera-controls">
 
     <button
-      class="button button-primary"
+      class="round-btn"
+      onclick="openGallery()"
+      aria-label="Escolher foto da galeria"
+    >
+      ▧
+    </button>
+
+    <button
+      class="round-btn shutter"
       onclick="takePhoto()"
+      aria-label="Tirar foto"
     >
-      CAPTURAR FOTO
+      ●
     </button>
 
     <button
-      class="button"
+      class="round-btn"
       onclick="switchCamera()"
+      aria-label="Trocar câmera"
     >
-      TROCAR CÂMERA
-    </button>
-
-    <button
-      class="button"
-      onclick="goHome()"
-    >
-      VOLTAR
+      ↻
     </button>
 
   </div>
 
 </section>
 
-<!-- =========================
-     FOTO PRONTA
-========================= -->
+<input
+  type="file"
+  id="gallery"
+  accept="image/*"
+>
+
+<!-- RESULTADO -->
 
 <section id="resultArea">
 
-  <h2 class="result-heading">
+  <h2 class="result-title">
     Sua lembrança está pronta!
   </h2>
 
   <p class="result-description">
-    Agora é só salvar sua fotografia.
+    Salve sua fotografia especial.
   </p>
 
   <canvas id="resultCanvas"></canvas>
@@ -469,17 +361,24 @@ input[type="file"] {
   <div class="result-buttons">
 
     <button
-      class="button button-primary"
+      class="result-button primary"
       onclick="downloadPhoto()"
     >
       SALVAR MINHA FOTO
     </button>
 
     <button
-      class="button"
+      class="result-button"
       onclick="goHome()"
     >
-      FAZER OUTRA FOTO
+      VOLTAR AO INÍCIO
+    </button>
+
+    <button
+      class="result-button"
+      onclick="openCamera()"
+    >
+      TIRAR OUTRA FOTO
     </button>
 
   </div>
@@ -490,145 +389,103 @@ input[type="file"] {
 
 <script>
 
-/* =================================
-   ELEMENTOS
-================================= */
+/* ELEMENTOS */
 
 const video = document.getElementById("video");
-
 const canvas = document.getElementById("resultCanvas");
-
 const ctx = canvas.getContext("2d");
 
 const home = document.getElementById("home");
-
 const cameraArea = document.getElementById("cameraArea");
-
 const resultArea = document.getElementById("resultArea");
 
 let stream = null;
-
 let facingMode = "user";
 
-/* =================================
-   NAVEGAÇÃO
-================================= */
+/* NAVEGAÇÃO */
 
 function showSection(section) {
-
   home.style.display = "none";
-
   cameraArea.style.display = "none";
-
   resultArea.style.display = "none";
 
   section.style.display = "block";
-
   window.scrollTo(0, 0);
-
 }
 
-/* =================================
-   CÂMERA
-================================= */
+/* ENCERRAR CÂMERA */
 
 function stopCamera() {
-
   if (stream) {
-
-    stream.getTracks().forEach(track => {
-      track.stop();
-    });
-
+    stream.getTracks().forEach(track => track.stop());
     stream = null;
-
   }
 
   video.srcObject = null;
-
 }
 
+/* ABRIR CÂMERA */
+
 async function openCamera() {
-
   try {
-
     if (!navigator.mediaDevices?.getUserMedia) {
-
-      throw new Error("Câmera não disponível");
-
+      throw new Error("Câmera indisponível");
     }
 
     stopCamera();
 
     stream = await navigator.mediaDevices.getUserMedia({
-
       video: {
         facingMode: facingMode
       },
-
       audio: false
-
     });
 
     video.srcObject = stream;
-
     await video.play();
 
     showSection(cameraArea);
 
   } catch (error) {
+    stopCamera();
 
     alert(
-      "Não foi possível abrir a câmera. Verifique se o navegador está autorizado a utilizá-la."
+      "Não foi possível abrir a câmera. Verifique as permissões do navegador."
     );
-
   }
-
 }
 
-/* =================================
-   TROCAR CÂMERA
-================================= */
+/* TROCAR CÂMERA */
 
 async function switchCamera() {
-
   facingMode =
-    facingMode === "user"
-      ? "environment"
-      : "user";
+    facingMode === "user" ? "environment" : "user";
 
   await openCamera();
-
 }
 
-/* =================================
-   AJUSTAR FOTOGRAFIA
-================================= */
+/* ABRIR GALERIA */
+
+function openGallery() {
+  document.getElementById("gallery").click();
+}
+
+/* AJUSTAR FOTO */
 
 function drawCover(source) {
-
-  const sourceWidth =
-    source.videoWidth || source.naturalWidth;
-
-  const sourceHeight =
-    source.videoHeight || source.naturalHeight;
+  const sw = source.videoWidth || source.naturalWidth;
+  const sh = source.videoHeight || source.naturalHeight;
 
   const width = 1080;
-
   const height = 1920;
 
-  const scale = Math.max(
-    width / sourceWidth,
-    height / sourceHeight
-  );
+  const scale = Math.max(width / sw, height / sh);
 
   const cropWidth = width / scale;
-
   const cropHeight = height / scale;
 
-  const sx = (sourceWidth - cropWidth) / 2;
-
-  const sy = (sourceHeight - cropHeight) / 2;
+  const sx = (sw - cropWidth) / 2;
+  const sy = (sh - cropHeight) / 2;
 
   ctx.drawImage(
     source,
@@ -641,21 +498,15 @@ function drawCover(source) {
     width,
     height
   );
-
 }
 
-/* =================================
-   APLICAR MOLDURA
-================================= */
+/* APLICAR MOLDURA */
 
 function applyFrame(source, cleanup) {
-
   const frameImage = new Image();
 
   frameImage.onload = function() {
-
     canvas.width = 1080;
-
     canvas.height = 1920;
 
     drawCover(source);
@@ -671,125 +522,88 @@ function applyFrame(source, cleanup) {
     if (cleanup) cleanup();
 
     stopCamera();
-
     showSection(resultArea);
-
   };
 
   frameImage.onerror = function() {
-
     if (cleanup) cleanup();
 
     alert(
       "Não foi possível carregar moldura.png. Confira se o arquivo está no GitHub."
     );
-
   };
 
   frameImage.src = "moldura.png";
-
 }
 
-/* =================================
-   CAPTURAR FOTO
-================================= */
+/* TIRAR FOTO */
 
 function takePhoto() {
-
   if (!video.videoWidth) {
-
     alert("Aguarde a câmera iniciar.");
-
     return;
-
   }
 
   applyFrame(video);
-
 }
 
-/* =================================
-   ESCOLHER FOTO DA GALERIA
-================================= */
+/* ESCOLHER FOTO DA GALERIA */
 
-document
-  .getElementById("gallery")
-  .addEventListener("change", function(event) {
-
+document.getElementById("gallery").addEventListener(
+  "change",
+  function(event) {
     const file = event.target.files[0];
 
     if (!file) return;
 
     const image = new Image();
-
     const imageURL = URL.createObjectURL(file);
 
     image.onload = function() {
-
       applyFrame(image, function() {
         URL.revokeObjectURL(imageURL);
       });
-
     };
 
     image.onerror = function() {
-
       URL.revokeObjectURL(imageURL);
-
       alert("Não foi possível abrir essa fotografia.");
-
     };
 
     image.src = imageURL;
+    event.target.value = "";
+  }
+);
 
-  });
-
-/* =================================
-   BAIXAR FOTO
-================================= */
+/* BAIXAR FOTO */
 
 function downloadPhoto() {
-
   canvas.toBlob(function(blob) {
-
     if (!blob) {
-
-      alert("Não foi possível salvar a fotografia.");
-
+      alert("Não foi possível gerar a foto.");
       return;
-
     }
 
     const url = URL.createObjectURL(blob);
-
     const link = document.createElement("a");
 
     link.href = url;
-
-    link.download = "lembranca-dos-noivos.png";
+    link.download = "lembranca-mariana-e-rodrigo.png";
 
     link.click();
 
     setTimeout(function() {
-
       URL.revokeObjectURL(url);
-
     }, 1000);
 
   }, "image/png");
-
 }
 
-/* =================================
-   VOLTAR À CAPA
-================================= */
+/* VOLTAR À CAPA */
 
 function goHome() {
-
   stopCamera();
-
   showSection(home);
-
 }
 
 </script>
