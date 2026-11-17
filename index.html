@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,20 +8,65 @@
 
 <title>Mariana & Rodrigo</title>
 
+<!-- FONTES DISPONÍVEIS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
 
-/* =================================
-   PERSONALIZE AS CORES AQUI
-================================= */
+/* ==================================================
+   🟨🟨🟨 PERSONALIZE AQUI PARA CADA CASAMENTO 🟨🟨🟨
+================================================== */
 
 :root {
-  --cor-nomes: #ffffff;
+
+  /* 🟨 FOTO DE FUNDO DA CAPA
+     Troque foto-capa.jpg pelo nome da nova imagem.
+     Para usar somente uma cor, coloque: none
+  */
+  --imagem-capa: url("foto-capa.jpg");
+
+  /* 🟨 COR DE FUNDO DA CAPA */
+  --cor-fundo-capa: #808000;
+
+  /* 🟨 COR DOS NOMES DA CAPA */
+  --cor-nomes: #FFFFFF;
+
+  /* 🟨 FONTE DOS NOMES DA CAPA */
+  --fonte-nomes: 'Cinzel', serif;
+
+  /* 🟨 TAMANHO DOS NOMES DA CAPA */
+  --tamanho-nomes: 54px;
+
+  /* 🟨 COR DA BORDA DO BOTÃO */
   --cor-botao: #ffffff;
+
+  /* 🟨 COR DA ESCRITA DO BOTÃO */
   --cor-texto-botao: #333333;
-  --cor-fundo-botao: rgba(255,255,255,0.20);
+
+  /* 🟨 COR DE FUNDO DO BOTÃO */
+  --cor-fundo-botao: rgba(255,255,255,0.85);
+
+  /* 🟨 FONTE DO BOTÃO */
+  --fonte-botao: 'Montserrat', sans-serif;
+
+  /* 🟨 COR DOS NOMES NA CÂMERA */
+  --cor-nomes-camera: #ffffff;
+
+  /* 🟨 FONTE DOS NOMES NA CÂMERA */
+  --fonte-camera: 'Cinzel', serif;
+
+  /* 🟨 TAMANHO DOS NOMES NA CÂMERA */
+  --tamanho-camera: 30px;
+
+  /* 🟨 COR DOS BOTÕES REDONDOS */
   --cor-botoes-camera: rgba(255,255,255,0.25);
+
+  /* 🟨 CORES DA TELA DE RESULTADO */
   --cor-fundo-resultado: #f5eee8;
   --cor-texto-resultado: #51443c;
+
 }
 
 /* CONFIGURAÇÕES GERAIS */
@@ -47,9 +93,9 @@ html, body {
   overflow: hidden;
 }
 
-/* =================================
-   CAPA CENTRALIZADA
-================================= */
+/* ==================================================
+   CAPA
+================================================== */
 
 #home {
   width: 100%;
@@ -67,6 +113,7 @@ html, body {
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  background-color: var(--cor-fundo-capa);
 }
 
 .hero-bg {
@@ -74,8 +121,10 @@ html, body {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  background-image: var(--imagem-capa);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .overlay {
@@ -100,8 +149,8 @@ html, body {
 }
 
 .names {
-  font-family: Georgia, serif;
-  font-size: clamp(40px, 11vw, 52px);
+  font-family: var(--fonte-nomes);
+  font-size: var(--tamanho-nomes);
   font-weight: normal;
   line-height: 1.1;
   color: var(--cor-nomes);
@@ -120,16 +169,17 @@ html, body {
   border: 1px solid var(--cor-botao);
   border-radius: 50px;
   background: var(--cor-fundo-botao);
-  color: var(--cor-botao);
+  color: var(--cor-texto-botao);
+  font-family: var(--fonte-botao);
   font-size: 11px;
   letter-spacing: 2px;
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
 
-/* =================================
-   CÂMERA E MOLDURA 9:16
-================================= */
+/* ==================================================
+   CÂMERA EM TELA CHEIA
+================================================== */
 
 #cameraArea {
   display: none;
@@ -160,6 +210,7 @@ html, body {
   object-fit: cover;
 }
 
+/* 🟨 MOLDURA DO CASAMENTO */
 #frame {
   position: absolute;
   inset: 0;
@@ -169,9 +220,35 @@ html, body {
   pointer-events: none;
 }
 
-/* =================================
+/* ==================================================
+   🟨 POSIÇÃO DOS NOMES NA MOLDURA
+   Aumente bottom para subir os nomes.
+   Diminua bottom para descer os nomes.
+================================================== */
+
+.camera-names {
+  position: absolute;
+  z-index: 24;
+  left: 0;
+  right: 0;
+  bottom: 145px;
+  width: 100%;
+  text-align: center;
+  padding: 0 15px;
+
+  color: var(--cor-nomes-camera);
+  font-family: var(--fonte-camera);
+  font-size: var(--tamanho-camera);
+  font-weight: normal;
+  line-height: 1.2;
+
+  text-shadow: 0 1px 5px rgba(0,0,0,0.35);
+  pointer-events: none;
+}
+
+/* ==================================================
    BOTÕES REDONDOS DA CÂMERA
-================================= */
+================================================== */
 
 .camera-controls {
   position: absolute;
@@ -209,9 +286,9 @@ html, body {
   font-size: 27px;
 }
 
-/* =================================
+/* ==================================================
    RESULTADO
-================================= */
+================================================== */
 
 #resultArea {
   display: none;
@@ -225,7 +302,7 @@ html, body {
 }
 
 .result-title {
-  font-family: Georgia, serif;
+  font-family: var(--fonte-nomes);
   font-size: 27px;
   font-weight: normal;
   margin-top: 20px;
@@ -267,8 +344,6 @@ html, body {
   color: white;
 }
 
-/* GALERIA */
-
 #gallery {
   display: none;
 }
@@ -280,32 +355,32 @@ html, body {
 
 <div class="app">
 
-<!-- CAPA -->
+<!-- ==================================================
+     CAPA
+     🟨 ALTERE OS NOMES ABAIXO
+================================================== -->
 
 <section id="home">
 
   <div class="hero">
 
-    <img
-      src="foto-capa.jpg"
-      class="hero-bg"
-      alt="Mariana e Rodrigo"
-    >
-
+    <div class="hero-bg"></div>
     <div class="overlay"></div>
 
     <div class="hero-content">
 
       <h1 class="names">
+        <!-- 🟨 NOME DO PRIMEIRO NOIVO -->
         Mariana
+
         <span>&</span>
+
+        <!-- 🟨 NOME DO SEGUNDO NOIVO -->
         Rodrigo
       </h1>
 
-      <button
-        class="access-button"
-        onclick="openCamera()"
-      >
+      <!-- 🟨 ALTERE O TEXTO DO BOTÃO AQUI -->
+      <button class="access-button" onclick="openCamera()">
         ACESSAR MOLDURA
       </button>
 
@@ -315,49 +390,40 @@ html, body {
 
 </section>
 
-<!-- CÂMERA -->
+<!-- ==================================================
+     CÂMERA
+================================================== -->
 
 <section id="cameraArea">
 
   <div class="stage">
 
-    <video
-      id="video"
-      autoplay
-      playsinline
-    ></video>
+    <video id="video" autoplay playsinline></video>
 
-    <img
-      id="frame"
-      src="moldura.png"
-      alt="Moldura personalizada"
-    >
+    <!-- 🟨 ARQUIVO DA MOLDURA -->
+    <img id="frame" src="moldura.png" alt="Moldura personalizada">
 
   </div>
 
+  <!-- 🟨 ALTERE AQUI OS NOMES QUE APARECEM NA MOLDURA -->
+
+  <div class="camera-names" id="cameraNames">
+    Mariana & Rodrigo
+  </div>
+
+  <!-- BOTÕES DA CÂMERA -->
+
   <div class="camera-controls">
 
-    <button
-      class="round-btn"
-      onclick="openGallery()"
-      aria-label="Escolher foto da galeria"
-    >
+    <button class="round-btn" onclick="openGallery()" aria-label="Abrir galeria">
       ▧
     </button>
 
-    <button
-      class="round-btn shutter"
-      onclick="takePhoto()"
-      aria-label="Tirar foto"
-    >
+    <button class="round-btn shutter" onclick="takePhoto()" aria-label="Tirar foto">
       ●
     </button>
 
-    <button
-      class="round-btn"
-      onclick="switchCamera()"
-      aria-label="Trocar câmera"
-    >
+    <button class="round-btn" onclick="switchCamera()" aria-label="Trocar câmera">
       ↻
     </button>
 
@@ -365,13 +431,11 @@ html, body {
 
 </section>
 
-<input
-  type="file"
-  id="gallery"
-  accept="image/*"
->
+<input type="file" id="gallery" accept="image/*">
 
-<!-- RESULTADO -->
+<!-- ==================================================
+     RESULTADO
+================================================== -->
 
 <section id="resultArea">
 
@@ -387,24 +451,15 @@ html, body {
 
   <div class="result-buttons">
 
-    <button
-      class="result-button primary"
-      onclick="downloadPhoto()"
-    >
+    <button class="result-button primary" onclick="downloadPhoto()">
       SALVAR MINHA FOTO
     </button>
 
-    <button
-      class="result-button"
-      onclick="goHome()"
-    >
+    <button class="result-button" onclick="goHome()">
       VOLTAR AO INÍCIO
     </button>
 
-    <button
-      class="result-button"
-      onclick="openCamera()"
-    >
+    <button class="result-button" onclick="openCamera()">
       TIRAR OUTRA FOTO
     </button>
 
@@ -427,7 +482,7 @@ const cameraArea = document.getElementById("cameraArea");
 const resultArea = document.getElementById("resultArea");
 
 let stream = null;
-let facingMode = "user";
+let facingMode = "environment";
 
 /* NAVEGAÇÃO */
 
@@ -451,7 +506,7 @@ function stopCamera() {
   video.srcObject = null;
 }
 
-/* ABRIR CÂMERA */
+/* ABRIR CÂMERA TRASEIRA */
 
 async function openCamera() {
   try {
@@ -461,14 +516,36 @@ async function openCamera() {
       throw new Error("Câmera indisponível");
     }
 
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: facingMode
-      },
-      audio: false
-    });
+    let newStream;
 
+    try {
+      newStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { exact: "environment" }
+        },
+        audio: false
+      });
+
+    } catch (error) {
+      if (
+        error.name === "OverconstrainedError" ||
+        error.name === "NotFoundError" ||
+        error.name === "TypeError"
+      ) {
+        newStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: "environment" }
+          },
+          audio: false
+        });
+      } else {
+        throw error;
+      }
+    }
+
+    stream = newStream;
     video.srcObject = stream;
+
     await video.play();
 
     showSection(cameraArea);
@@ -476,9 +553,21 @@ async function openCamera() {
   } catch (error) {
     stopCamera();
 
-    alert(
-      "Não foi possível abrir a câmera. Verifique as permissões do navegador."
-    );
+    let mensagem = "Não foi possível abrir a câmera.";
+
+    if (
+      error.name === "NotAllowedError" ||
+      error.name === "PermissionDeniedError"
+    ) {
+      mensagem = "A permissão da câmera foi bloqueada. Acesse as configurações do navegador e permita o uso da câmera.";
+    } else if (error.name === "NotFoundError") {
+      mensagem = "Nenhuma câmera compatível foi encontrada.";
+    } else if (error.name === "NotReadableError") {
+      mensagem = "A câmera está sendo usada por outro aplicativo. Feche os outros aplicativos que utilizam a câmera.";
+    }
+
+    alert(mensagem);
+    console.error("Erro ao abrir câmera:", error);
   }
 }
 
@@ -486,7 +575,7 @@ async function openCamera() {
 
 async function switchCamera() {
   facingMode =
-    facingMode === "user" ? "environment" : "user";
+    facingMode === "environment" ? "user" : "environment";
 
   await openCamera();
 }
@@ -527,24 +616,59 @@ function drawCover(source) {
   );
 }
 
-/* APLICAR MOLDURA */
+/* DESENHAR NOMES NA FOTO FINAL */
+
+async function drawNamesOnPhoto() {
+
+  await document.fonts.ready;
+
+  const cameraHeight = cameraArea.clientHeight || window.innerHeight;
+  const scale = canvas.height / cameraHeight;
+
+  const namesElement = document.getElementById("cameraNames");
+  const style = getComputedStyle(namesElement);
+
+  const bottom = parseFloat(style.bottom) || 145;
+  const fontSize = parseFloat(style.fontSize) || 30;
+  const fontFamily = style.fontFamily;
+  const color = style.color;
+
+  ctx.save();
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+
+  ctx.fillStyle = color;
+  ctx.font = `${fontSize * scale}px ${fontFamily}`;
+
+  ctx.shadowColor = "rgba(0,0,0,0.35)";
+  ctx.shadowBlur = 5 * scale;
+  ctx.shadowOffsetY = 1 * scale;
+
+  ctx.fillText(
+    namesElement.textContent.trim(),
+    canvas.width / 2,
+    canvas.height - (bottom * scale) - (5 * scale)
+  );
+
+  ctx.restore();
+}
+
+/* APLICAR MOLDURA E NOMES */
 
 function applyFrame(source, cleanup) {
   const frameImage = new Image();
 
-  frameImage.onload = function() {
+  frameImage.onload = async function() {
+
     canvas.width = 1080;
     canvas.height = 1920;
 
     drawCover(source);
 
-    ctx.drawImage(
-      frameImage,
-      0,
-      0,
-      1080,
-      1920
-    );
+    ctx.drawImage(frameImage, 0, 0, 1080, 1920);
+
+    await drawNamesOnPhoto();
 
     if (cleanup) cleanup();
 
@@ -555,9 +679,7 @@ function applyFrame(source, cleanup) {
   frameImage.onerror = function() {
     if (cleanup) cleanup();
 
-    alert(
-      "Não foi possível carregar moldura.png. Confira se o arquivo está no GitHub."
-    );
+    alert("Não foi possível carregar moldura.png. Confira o arquivo no GitHub.");
   };
 
   frameImage.src = "moldura.png";
@@ -579,6 +701,7 @@ function takePhoto() {
 document.getElementById("gallery").addEventListener(
   "change",
   function(event) {
+
     const file = event.target.files[0];
 
     if (!file) return;
@@ -606,6 +729,7 @@ document.getElementById("gallery").addEventListener(
 
 function downloadPhoto() {
   canvas.toBlob(function(blob) {
+
     if (!blob) {
       alert("Não foi possível gerar a foto.");
       return;
