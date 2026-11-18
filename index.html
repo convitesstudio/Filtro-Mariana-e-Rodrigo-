@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000000">
 
-<!-- 🟨 ALTERE AQUI: NOME DA PÁGINA -->
+<!-- 🟨 NOME DA PÁGINA -->
 <title>Cabine de Fotos</title>
 
 <style>
@@ -20,33 +20,33 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #000000;
+  background: #000;
   font-family: Arial, sans-serif;
 }
 
 :root {
-  /* 🟨 ALTERE AQUI: CORES DOS BOTÕES DA CÂMERA */
+  /* 🟨 CORES DOS BOTÕES DA CÂMERA */
   --camera-button-color: #ffffff;
   --camera-label-color: #ffffff;
   --camera-button-background: rgba(255,255,255,0.18);
 
-  /* 🟨 ALTERE AQUI: CORES DOS BOTÕES DE RESULTADO */
+  /* 🟨 CORES DOS BOTÕES DE RESULTADO */
   --result-button-background: #ffffff;
   --result-button-text: #333333;
   --result-button-border: #dddddd;
 
-  /* 🟨 ALTERE AQUI: CORES DOS MODOS FOTO E VÍDEO */
+  /* 🟨 CORES DOS MODOS FOTO E VÍDEO */
   --mode-selected-background: #ffffff;
   --mode-selected-text: #222222;
   --mode-unselected-text: #ffffff;
 
-  /* 🟨 ALTERE AQUI: FUNDO DA TELA DE RESULTADO */
+  /* 🟨 FUNDO DA TELA DE RESULTADO */
   --result-background: #ffffff;
 
-  /* 🟨 ALTERE AQUI: TAMANHO DAS LEGENDAS */
+  /* 🟨 TAMANHO DAS LEGENDAS */
   --camera-label-size: 10px;
 
-  /* 🟨 ALTERE AQUI: FONTE DOS BOTÕES */
+  /* 🟨 FONTE DOS BOTÕES */
   --button-font: Arial, sans-serif;
 }
 
@@ -67,6 +67,15 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+#videoPreviewCanvas {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: 2;
 }
 
 #frame {
@@ -229,7 +238,7 @@ html, body {
   background: #000;
 }
 
-/* BOTÕES ABAIXO DA FOTO OU VÍDEO */
+/* BOTÕES DE RESULTADO */
 
 .result-buttons {
   display: flex;
@@ -255,7 +264,7 @@ html, body {
   cursor: pointer;
 }
 
-/* MENSAGEM DE ERRO */
+/* MENSAGEM */
 
 #message {
   position: fixed;
@@ -303,20 +312,24 @@ html, body {
 
   <video id="video" autoplay playsinline muted></video>
 
-  <!-- 🟨 ALTERE AQUI: NOME DO ARQUIVO DA MOLDURA -->
+  <canvas
+    id="videoPreviewCanvas"
+    width="1080"
+    height="1920">
+  </canvas>
+
+  <!-- 🟨 ARQUIVO DA MOLDURA -->
   <img id="frame" src="moldura.png" alt="Moldura personalizada">
 
   <div class="mode-selector">
 
-    <button
-      class="mode-button active"
+    <button class="mode-button active"
       id="photoModeButton"
       onclick="setMode('photo')">
       FOTO
     </button>
 
-    <button
-      class="mode-button"
+    <button class="mode-button"
       id="videoModeButton"
       onclick="setMode('video')">
       VÍDEO
@@ -336,14 +349,11 @@ html, body {
       <span>GALERIA</span>
     </button>
 
-    <button
-      class="camera-control capture-button"
+    <button class="camera-control capture-button"
       id="captureButton"
       onclick="captureAction()">
-
       <span class="round-button"></span>
       <span id="captureLabel">FOTOGRAFAR</span>
-
     </button>
 
     <button class="camera-control" onclick="switchCamera()">
@@ -353,8 +363,7 @@ html, body {
 
   </div>
 
-  <input
-    type="file"
+  <input type="file"
     id="galleryInput"
     accept="image/*"
     hidden>
@@ -365,35 +374,30 @@ html, body {
 
 <section id="resultArea">
 
-  <canvas
-    id="photoCanvas"
+  <canvas id="photoCanvas"
     width="1080"
     height="1920">
   </canvas>
 
-  <video
-    id="videoResult"
+  <video id="videoResult"
     controls
     playsinline>
   </video>
 
   <div class="result-buttons">
 
-    <button
-      class="result-button"
+    <button class="result-button"
       id="saveButton"
       onclick="saveResult()">
       SALVAR MINHA FOTO
     </button>
 
-    <button
-      class="result-button"
+    <button class="result-button"
       onclick="backToCamera()">
       VOLTAR AO INÍCIO
     </button>
 
-    <button
-      class="result-button"
+    <button class="result-button"
       id="againButton"
       onclick="takeAgain()">
       TIRAR OUTRA FOTO
@@ -407,36 +411,35 @@ html, body {
 
 <script>
 
-/* ==================================================
+/* ==========================================
    🟨 ÁREA DE PERSONALIZAÇÃO
-   ALTERE SOMENTE OS CAMPOS INDICADOS
-================================================== */
+========================================== */
 
 const CONFIG = {
 
   // 🟨 NOME DO EVENTO
   eventName: "Cabine de Fotos",
 
-  // 🟨 NOME DO ARQUIVO DA MOLDURA
+  // 🟨 ARQUIVO DA MOLDURA
   frameFile: "moldura.png",
 
-  // 🟨 NOME DO ARQUIVO DA FOTO SALVA
+  // 🟨 NOME DA FOTO SALVA
   photoFileName: "minha-foto-com-moldura.png",
 
-  // 🟨 NOME DO ARQUIVO DO VÍDEO SALVO
+  // 🟨 NOME DO VÍDEO SALVO
   videoFileName: "meu-video-com-moldura",
 
-  // 🟨 TEXTO DOS BOTÕES DA CÂMERA
+  // 🟨 TEXTOS DOS BOTÕES
   galleryLabel: "GALERIA",
   photoLabel: "FOTOGRAFAR",
   videoLabel: "GRAVAR VÍDEO",
   switchCameraLabel: "TROCAR CÂMERA",
 
-  // 🟨 TEXTO DOS MODOS
+  // 🟨 TEXTOS DOS MODOS
   photoModeLabel: "FOTO",
   videoModeLabel: "VÍDEO",
 
-  // 🟨 TEXTO DOS BOTÕES DE RESULTADO
+  // 🟨 TEXTOS DOS RESULTADOS
   savePhotoLabel: "SALVAR MINHA FOTO",
   saveVideoLabel: "SALVAR MEU VÍDEO",
   homeLabel: "VOLTAR AO INÍCIO",
@@ -455,7 +458,7 @@ const CONFIG = {
 
 };
 
-/* FIM DA ÁREA DE PERSONALIZAÇÃO */
+/* FIM DA PERSONALIZAÇÃO */
 
 /* ELEMENTOS */
 
@@ -467,6 +470,12 @@ const frame = document.getElementById("frame");
 
 const canvas = document.getElementById("photoCanvas");
 const ctx = canvas.getContext("2d");
+
+const videoPreviewCanvas =
+  document.getElementById("videoPreviewCanvas");
+
+const previewCtx =
+  videoPreviewCanvas.getContext("2d");
 
 const galleryInput = document.getElementById("galleryInput");
 const videoResult = document.getElementById("videoResult");
@@ -498,31 +507,32 @@ let animationFrame = null;
 let canvasStream = null;
 let recordingMimeType = "";
 
-/* APLICA PERSONALIZAÇÕES */
+/* PERSONALIZAÇÃO */
 
 document.title = CONFIG.eventName;
-
 frame.src = CONFIG.frameFile;
 
 photoModeButton.textContent = CONFIG.photoModeLabel;
 videoModeButton.textContent = CONFIG.videoModeLabel;
 
-document.querySelector(".camera-controls button:first-child span:last-child").textContent =
-  CONFIG.galleryLabel;
+document.querySelector(
+  ".camera-controls button:first-child span:last-child"
+).textContent = CONFIG.galleryLabel;
 
-document.querySelector(".camera-controls button:last-child span:last-child").textContent =
-  CONFIG.switchCameraLabel;
+document.querySelector(
+  ".camera-controls button:last-child span:last-child"
+).textContent = CONFIG.switchCameraLabel;
 
 saveButton.textContent = CONFIG.savePhotoLabel;
 againButton.textContent = CONFIG.againPhotoLabel;
 
-document.querySelector("#resultArea .result-buttons button:nth-child(2)").textContent =
-  CONFIG.homeLabel;
+document.querySelector(
+  "#resultArea .result-buttons button:nth-child(2)"
+).textContent = CONFIG.homeLabel;
 
 /* MENSAGENS */
 
 function showMessage(text) {
-
   const message = document.getElementById("message");
 
   message.textContent = text;
@@ -531,18 +541,95 @@ function showMessage(text) {
   setTimeout(() => {
     message.style.display = "none";
   }, 4500);
-
 }
 
-/* ENQUADRAMENTO DA CÂMERA NA TELA */
+/* DESENHAR IMAGEM NO FORMATO 9:16 */
 
-function updateCameraFit() {
+function drawCover(source, targetContext) {
 
-  video.style.objectFit = "cover";
+  const sourceWidth =
+    source.videoWidth || source.naturalWidth;
 
+  const sourceHeight =
+    source.videoHeight || source.naturalHeight;
+
+  if (!sourceWidth || !sourceHeight) return;
+
+  const targetWidth = 1080;
+  const targetHeight = 1920;
+  const targetRatio = targetWidth / targetHeight;
+  const sourceRatio = sourceWidth / sourceHeight;
+
+  let sx = 0;
+  let sy = 0;
+  let sw = sourceWidth;
+  let sh = sourceHeight;
+
+  if (sourceRatio > targetRatio) {
+    sw = sourceHeight * targetRatio;
+    sx = (sourceWidth - sw) / 2;
+  } else {
+    sh = sourceWidth / targetRatio;
+    sy = (sourceHeight - sh) / 2;
+  }
+
+  targetContext.clearRect(0, 0, targetWidth, targetHeight);
+
+  targetContext.drawImage(
+    source,
+    sx, sy, sw, sh,
+    0, 0, targetWidth, targetHeight
+  );
+
+  if (frame.complete && frame.naturalWidth) {
+    targetContext.drawImage(
+      frame,
+      0, 0, targetWidth, targetHeight
+    );
+  }
 }
 
-/* MODOS FOTO E VÍDEO */
+/* PRÉVIA DO VÍDEO */
+
+function updateVideoPreview() {
+
+  if (
+    currentMode !== "video" ||
+    cameraArea.style.display === "none"
+  ) {
+    return;
+  }
+
+  if (video.readyState >= 2) {
+    drawCover(video, previewCtx);
+  }
+
+  animationFrame =
+    requestAnimationFrame(updateVideoPreview);
+}
+
+function startVideoPreview() {
+
+  stopVideoPreview();
+
+  video.style.display = "none";
+  frame.style.display = "none";
+  videoPreviewCanvas.style.display = "block";
+
+  updateVideoPreview();
+}
+
+function stopVideoPreview() {
+
+  if (animationFrame) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+  }
+
+  videoPreviewCanvas.style.display = "none";
+}
+
+/* MODOS */
 
 function setMode(mode) {
 
@@ -561,8 +648,13 @@ function setMode(mode) {
       ? CONFIG.photoLabel
       : CONFIG.videoLabel;
 
-  updateCameraFit();
-
+  if (mode === "video") {
+    startVideoPreview();
+  } else {
+    stopVideoPreview();
+    video.style.display = "block";
+    frame.style.display = "block";
+  }
 }
 
 /* ABRIR CÂMERA */
@@ -576,10 +668,8 @@ async function openCamera() {
 
   if (!navigator.mediaDevices ||
       !navigator.mediaDevices.getUserMedia) {
-
     showMessage("Seu navegador não permite acessar a câmera. Use uma conexão HTTPS.");
     return;
-
   }
 
   try {
@@ -611,7 +701,12 @@ async function openCamera() {
 
     await video.play();
 
-    updateCameraFit();
+    if (currentMode === "video") {
+      startVideoPreview();
+    } else {
+      video.style.display = "block";
+      frame.style.display = "block";
+    }
 
   } catch (error) {
 
@@ -619,37 +714,29 @@ async function openCamera() {
 
     if (error.name === "NotAllowedError" ||
         error.name === "PermissionDeniedError") {
-
       showMessage("Permita o acesso à câmera e ao microfone nas configurações do navegador.");
-
     } else if (error.name === "NotReadableError") {
-
       showMessage("A câmera ou o microfone estão sendo usados por outro aplicativo.");
-
     } else {
-
       showMessage("Não foi possível abrir a câmera. Verifique as permissões e tente novamente.");
-
     }
 
   }
-
 }
 
 /* ENCERRAR CÂMERA */
 
 function stopCamera() {
 
-  if (stream) {
+  stopVideoPreview();
 
+  if (stream) {
     stream.getTracks().forEach(track => track.stop());
     stream = null;
-
   }
 
   video.pause();
   video.srcObject = null;
-
 }
 
 /* TROCAR CÂMERA */
@@ -667,10 +754,9 @@ async function switchCamera() {
       : "environment";
 
   await openCamera();
-
 }
 
-/* FOTOGRAFAR OU GRAVAR */
+/* AÇÃO PRINCIPAL */
 
 function captureAction() {
 
@@ -684,7 +770,6 @@ function captureAction() {
   } else {
     toggleRecording();
   }
-
 }
 
 /* FOTO */
@@ -696,69 +781,15 @@ function takePhoto() {
     return;
   }
 
-  drawCover(video);
+  drawCover(video, ctx);
 
   currentPhoto = canvas.toDataURL("image/png");
   currentVideoUrl = null;
 
   showPhotoResult();
-
 }
 
-/* ENQUADRAMENTO 9:16 */
-
-function drawCover(source) {
-
-  const sourceWidth =
-    source.videoWidth || source.naturalWidth;
-
-  const sourceHeight =
-    source.videoHeight || source.naturalHeight;
-
-  if (!sourceWidth || !sourceHeight) return;
-
-  const targetRatio = 1080 / 1920;
-  const sourceRatio = sourceWidth / sourceHeight;
-
-  let sx = 0;
-  let sy = 0;
-  let sw = sourceWidth;
-  let sh = sourceHeight;
-
-  if (sourceRatio > targetRatio) {
-
-    sw = sourceHeight * targetRatio;
-    sx = (sourceWidth - sw) / 2;
-
-  } else {
-
-    sh = sourceWidth / targetRatio;
-    sy = (sourceHeight - sh) / 2;
-
-  }
-
-  ctx.clearRect(
-    0, 0,
-    canvas.width,
-    canvas.height
-  );
-
-  ctx.drawImage(
-    source,
-    sx, sy, sw, sh,
-    0, 0, canvas.width, canvas.height
-  );
-
-  ctx.drawImage(
-    frame,
-    0, 0,
-    canvas.width,
-    canvas.height
-  );
-
-}
-
-/* MOSTRAR FOTO */
+/* RESULTADO DA FOTO */
 
 function showPhotoResult() {
 
@@ -774,29 +805,20 @@ function showPhotoResult() {
 
   cameraArea.style.display = "none";
   resultArea.style.display = "flex";
-
 }
 
-/* INICIAR OU ENCERRAR GRAVAÇÃO */
+/* GRAVAÇÃO */
 
 function toggleRecording() {
 
-  if (
-    mediaRecorder &&
-    mediaRecorder.state === "recording"
-  ) {
-
+  if (mediaRecorder && mediaRecorder.state === "recording") {
     mediaRecorder.stop();
-
   } else {
-
     startRecording();
-
   }
-
 }
 
-/* FORMATOS DE VÍDEO SUPORTADOS */
+/* FORMATO COMPATÍVEL */
 
 function getSupportedMimeType() {
 
@@ -809,15 +831,12 @@ function getSupportedMimeType() {
   ];
 
   for (const type of types) {
-
     if (MediaRecorder.isTypeSupported(type)) {
       return type;
     }
-
   }
 
   return "";
-
 }
 
 /* INICIAR GRAVAÇÃO */
@@ -829,29 +848,22 @@ function startRecording() {
     return;
   }
 
-  if (
-    !window.MediaRecorder ||
-    !canvas.captureStream
-  ) {
-
+  if (!window.MediaRecorder ||
+      !videoPreviewCanvas.captureStream) {
     showMessage("Seu navegador não oferece suporte à gravação com moldura.");
     return;
-
   }
 
   try {
 
     recordedChunks = [];
 
-    drawCover(video);
+    drawCover(video, previewCtx);
 
-    canvasStream = canvas.captureStream(CONFIG.videoFPS);
+    canvasStream =
+      videoPreviewCanvas.captureStream(CONFIG.videoFPS);
 
-    /* ADICIONAR ÁUDIO DO MICROFONE */
-
-    const audioTracks = stream.getAudioTracks();
-
-    audioTracks.forEach(track => {
+    stream.getAudioTracks().forEach(track => {
       canvasStream.addTrack(track);
     });
 
@@ -861,26 +873,19 @@ function startRecording() {
       ? { mimeType: recordingMimeType }
       : {};
 
-    mediaRecorder = new MediaRecorder(
-      canvasStream,
-      options
-    );
+    mediaRecorder = new MediaRecorder(canvasStream, options);
 
     mediaRecorder.ondataavailable = function(event) {
-
       if (event.data && event.data.size > 0) {
         recordedChunks.push(event.data);
       }
-
     };
 
     mediaRecorder.onstop = finishRecording;
 
     mediaRecorder.onerror = function() {
-
       showMessage("Ocorreu um erro durante a gravação.");
       cleanupRecording();
-
     };
 
     mediaRecorder.start(1000);
@@ -888,9 +893,7 @@ function startRecording() {
     recordingStartedAt = Date.now();
 
     recordingIndicator.style.display = "flex";
-
     captureButton.classList.add("recording");
-
     captureLabel.textContent = "ENCERRAR";
 
     recordingTimer = setInterval(
@@ -898,37 +901,15 @@ function startRecording() {
       500
     );
 
-    /* DESENHAR A MOLDURA DURANTE O VÍDEO */
-
-    function renderFrame() {
-
-      if (
-        !mediaRecorder ||
-        mediaRecorder.state !== "recording"
-      ) {
-        return;
-      }
-
-      drawCover(video);
-
-      animationFrame =
-        requestAnimationFrame(renderFrame);
-
-    }
-
-    animationFrame =
-      requestAnimationFrame(renderFrame);
+    updateVideoPreview();
 
   } catch (error) {
 
     console.error(error);
-
     showMessage("Não foi possível iniciar a gravação.");
-
     cleanupRecording();
 
   }
-
 }
 
 /* CRONÔMETRO */
@@ -949,10 +930,9 @@ function updateRecordingTime() {
 
   recordingTime.textContent =
     minutesText + ":" + secondsText;
-
 }
 
-/* FINALIZAR VÍDEO */
+/* FINALIZAR GRAVAÇÃO */
 
 function finishRecording() {
 
@@ -976,7 +956,6 @@ function finishRecording() {
   }
 
   currentVideoUrl = URL.createObjectURL(videoBlob);
-
   currentPhoto = null;
 
   videoResult.src = currentVideoUrl;
@@ -993,7 +972,6 @@ function finishRecording() {
   resultArea.style.display = "flex";
 
   videoResult.load();
-
 }
 
 /* LIMPAR GRAVAÇÃO */
@@ -1001,54 +979,36 @@ function finishRecording() {
 function cleanupRecording() {
 
   if (recordingTimer) {
-
     clearInterval(recordingTimer);
     recordingTimer = null;
-
   }
 
-  if (animationFrame) {
-
-    cancelAnimationFrame(animationFrame);
-    animationFrame = null;
-
-  }
+  stopVideoPreview();
 
   if (canvasStream) {
-
-    canvasStream.getTracks().forEach(
-      track => track.stop()
-    );
-
+    canvasStream.getTracks().forEach(track => track.stop());
     canvasStream = null;
-
   }
 
   recordingIndicator.style.display = "none";
-
   captureButton.classList.remove("recording");
 
   captureLabel.textContent =
     currentMode === "photo"
       ? CONFIG.photoLabel
       : CONFIG.videoLabel;
-
 }
 
-/* GALERIA DE FOTOS */
+/* GALERIA */
 
 function openGallery() {
 
   if (currentMode === "video") {
-
     showMessage("A galeria está disponível para fotos. Para vídeos, use a câmera.");
-
     return;
-
   }
 
   galleryInput.click();
-
 }
 
 galleryInput.addEventListener("change", function(event) {
@@ -1058,46 +1018,34 @@ galleryInput.addEventListener("change", function(event) {
   if (!file) return;
 
   if (!file.type.startsWith("image/")) {
-
     showMessage("Selecione uma foto para aplicar a moldura.");
-
     galleryInput.value = "";
-
     return;
-
   }
 
   const objectUrl = URL.createObjectURL(file);
-
   const image = new Image();
 
   image.onload = function() {
 
-    drawCover(image);
+    drawCover(image, ctx);
 
     currentPhoto = canvas.toDataURL("image/png");
     currentVideoUrl = null;
 
     URL.revokeObjectURL(objectUrl);
-
     galleryInput.value = "";
 
     showPhotoResult();
-
   };
 
   image.onerror = function() {
-
     showMessage("Não foi possível abrir essa imagem.");
-
     URL.revokeObjectURL(objectUrl);
-
     galleryInput.value = "";
-
   };
 
   image.src = objectUrl;
-
 });
 
 /* SALVAR FOTO OU VÍDEO */
@@ -1128,7 +1076,6 @@ function saveResult() {
 
     showMessage("Nenhum arquivo disponível para salvar.");
     return;
-
   }
 
   const link = document.createElement("a");
@@ -1137,11 +1084,8 @@ function saveResult() {
   link.download = filename;
 
   document.body.appendChild(link);
-
   link.click();
-
   document.body.removeChild(link);
-
 }
 
 /* VOLTAR À CÂMERA */
@@ -1151,27 +1095,22 @@ function backToCamera() {
   videoResult.pause();
 
   if (currentVideoUrl) {
-
     URL.revokeObjectURL(currentVideoUrl);
     currentVideoUrl = null;
-
   }
 
   currentPhoto = null;
 
   openCamera();
-
 }
 
-/* TIRAR OUTRA FOTO OU GRAVAR OUTRO VÍDEO */
+/* TIRAR OUTRA FOTO OU VÍDEO */
 
 function takeAgain() {
-
   backToCamera();
-
 }
 
-/* ENCERRAR RECURSOS AO SAIR DA PÁGINA */
+/* SAIR DA PÁGINA */
 
 window.addEventListener("pagehide", function() {
 
