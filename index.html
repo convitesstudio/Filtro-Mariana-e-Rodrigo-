@@ -538,11 +538,7 @@ function showMessage(text) {
 
 function updateCameraFit() {
 
-  const useNormalFrontView =
-    currentMode === "video" && facingMode === "user";
-
-  video.style.objectFit =
-    useNormalFrontView ? "contain" : "cover";
+  video.style.objectFit = "cover";
 
 }
 
@@ -720,62 +716,6 @@ function drawCover(source) {
     source.videoHeight || source.naturalHeight;
 
   if (!sourceWidth || !sourceHeight) return;
-
-  /*
-    🟨 AJUSTE DA CÂMERA FRONTAL NO VÍDEO
-
-    Mantém a imagem inteira, sem o corte
-    que causa o efeito de zoom.
-  */
-
-  if (
-    source === video &&
-    currentMode === "video" &&
-    facingMode === "user"
-  ) {
-
-    const scale = Math.min(
-      canvas.width / sourceWidth,
-      canvas.height / sourceHeight
-    );
-
-    const width = sourceWidth * scale;
-    const height = sourceHeight * scale;
-
-    ctx.clearRect(
-      0, 0,
-      canvas.width,
-      canvas.height
-    );
-
-    ctx.fillStyle = "#000000";
-
-    ctx.fillRect(
-      0, 0,
-      canvas.width,
-      canvas.height
-    );
-
-    ctx.drawImage(
-      source,
-      (canvas.width - width) / 2,
-      (canvas.height - height) / 2,
-      width,
-      height
-    );
-
-    ctx.drawImage(
-      frame,
-      0, 0,
-      canvas.width,
-      canvas.height
-    );
-
-    return;
-
-  }
-
-  /* ENQUADRAMENTO ORIGINAL DOS DEMAIS MODOS */
 
   const targetRatio = 1080 / 1920;
   const sourceRatio = sourceWidth / sourceHeight;
