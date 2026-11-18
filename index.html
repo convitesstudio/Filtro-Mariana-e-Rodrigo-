@@ -448,7 +448,7 @@ const CONFIG = {
   // user = frontal
   initialCamera: "environment",
 
-  // 🟨 QUALIDADE DA GRAVAÇÃO
+  // 🟨 QUALIDADE DO VÍDEO
   videoWidth: 1080,
   videoHeight: 1920,
   videoFPS: 30
@@ -522,6 +522,7 @@ document.querySelector("#resultArea .result-buttons button:nth-child(2)").textCo
 /* MENSAGENS */
 
 function showMessage(text) {
+
   const message = document.getElementById("message");
 
   message.textContent = text;
@@ -530,6 +531,19 @@ function showMessage(text) {
   setTimeout(() => {
     message.style.display = "none";
   }, 4500);
+
+}
+
+/* ENQUADRAMENTO DA CÂMERA NA TELA */
+
+function updateCameraFit() {
+
+  const useNormalFrontView =
+    currentMode === "video" && facingMode === "user";
+
+  video.style.objectFit =
+    useNormalFrontView ? "contain" : "cover";
+
 }
 
 /* MODOS FOTO E VÍDEO */
@@ -550,6 +564,9 @@ function setMode(mode) {
     mode === "photo"
       ? CONFIG.photoLabel
       : CONFIG.videoLabel;
+
+  updateCameraFit();
+
 }
 
 /* ABRIR CÂMERA */
@@ -566,6 +583,7 @@ async function openCamera() {
 
     showMessage("Seu navegador não permite acessar a câmera. Use uma conexão HTTPS.");
     return;
+
   }
 
   try {
@@ -597,6 +615,8 @@ async function openCamera() {
 
     await video.play();
 
+    updateCameraFit();
+
   } catch (error) {
 
     console.error(error);
@@ -617,6 +637,7 @@ async function openCamera() {
     }
 
   }
+
 }
 
 /* ENCERRAR CÂMERA */
@@ -624,12 +645,15 @@ async function openCamera() {
 function stopCamera() {
 
   if (stream) {
+
     stream.getTracks().forEach(track => track.stop());
     stream = null;
+
   }
 
   video.pause();
   video.srcObject = null;
+
 }
 
 /* TROCAR CÂMERA */
@@ -647,6 +671,7 @@ async function switchCamera() {
       : "environment";
 
   await openCamera();
+
 }
 
 /* FOTOGRAFAR OU GRAVAR */
@@ -663,6 +688,7 @@ function captureAction() {
   } else {
     toggleRecording();
   }
+
 }
 
 /* FOTO */
@@ -677,10 +703,10 @@ function takePhoto() {
   drawCover(video);
 
   currentPhoto = canvas.toDataURL("image/png");
-
   currentVideoUrl = null;
 
   showPhotoResult();
+
 }
 
 /* ENQUADRAMENTO 9:16 */
@@ -694,6 +720,62 @@ function drawCover(source) {
     source.videoHeight || source.naturalHeight;
 
   if (!sourceWidth || !sourceHeight) return;
+
+  /*
+    🟨 AJUSTE DA CÂMERA FRONTAL NO VÍDEO
+
+    Mantém a imagem inteira, sem o corte
+    que causa o efeito de zoom.
+  */
+
+  if (
+    source === video &&
+    currentMode === "video" &&
+    facingMode === "user"
+  ) {
+
+    const scale = Math.min(
+      canvas.width / sourceWidth,
+      canvas.height / sourceHeight
+    );
+
+    const width = sourceWidth * scale;
+    const height = sourceHeight * scale;
+
+    ctx.clearRect(
+      0, 0,
+      canvas.width,
+      canvas.height
+    );
+
+    ctx.fillStyle = "#000000";
+
+    ctx.fillRect(
+      0, 0,
+      canvas.width,
+      canvas.height
+    );
+
+    ctx.drawImage(
+      source,
+      (canvas.width - width) / 2,
+      (canvas.height - height) / 2,
+      width,
+      height
+    );
+
+    ctx.drawImage(
+      frame,
+      0, 0,
+      canvas.width,
+      canvas.height
+    );
+
+    return;
+
+  }
+
+  /* ENQUADRAMENTO ORIGINAL DOS DEMAIS MODOS */
 
   const targetRatio = 1080 / 1920;
   const sourceRatio = sourceWidth / sourceHeight;
@@ -715,7 +797,11 @@ function drawCover(source) {
 
   }
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(
+    0, 0,
+    canvas.width,
+    canvas.height
+  );
 
   ctx.drawImage(
     source,
@@ -748,14 +834,17 @@ function showPhotoResult() {
 
   cameraArea.style.display = "none";
   resultArea.style.display = "flex";
+
 }
 
 /* INICIAR OU ENCERRAR GRAVAÇÃO */
 
 function toggleRecording() {
 
-  if (mediaRecorder &&
-      mediaRecorder.state === "recording") {
+  if (
+    mediaRecorder &&
+    mediaRecorder.state === "recording"
+  ) {
 
     mediaRecorder.stop();
 
@@ -800,11 +889,14 @@ function startRecording() {
     return;
   }
 
-  if (!window.MediaRecorder ||
-      !canvas.captureStream) {
+  if (
+    !window.MediaRecorder ||
+    !canvas.captureStream
+  ) {
 
     showMessage("Seu navegador não oferece suporte à gravação com moldura.");
     return;
+
   }
 
   try {
@@ -870,8 +962,10 @@ function startRecording() {
 
     function renderFrame() {
 
-      if (!mediaRecorder ||
-          mediaRecorder.state !== "recording") {
+      if (
+        !mediaRecorder ||
+        mediaRecorder.state !== "recording"
+      ) {
         return;
       }
 
@@ -1010,6 +1104,7 @@ function openGallery() {
     showMessage("A galeria está disponível para fotos. Para vídeos, use a câmera.");
 
     return;
+
   }
 
   galleryInput.click();
@@ -1029,6 +1124,7 @@ galleryInput.addEventListener("change", function(event) {
     galleryInput.value = "";
 
     return;
+
   }
 
   const objectUrl = URL.createObjectURL(file);
